@@ -1,11 +1,8 @@
 # Build Your Own Redis
 
-This application is my solution to the Coding Challenges series. The page to the challenge can be found [here](https://codingchallenges.fyi/challenges/challenge-redis/).
+This application is my attempt at building a custom Key-Value store hosted locally using Java sockets
 
 ## Description
-
-This challenge is to build a Redis Server.
-Redis is an in-memory data structure server, which supports storing strings, hashes, lists, sets, sorted sets and more.
 
 ## Docs
 

@@ -1,4 +1,4 @@
-# Build Your Own Redis
+# Build Your Own Key-Value Store
 
 This application is my attempt at building a custom Key-Value store hosted locally using Java sockets
 

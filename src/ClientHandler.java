@@ -4,6 +4,7 @@ import java.net.Socket;
 public class ClientHandler implements Runnable {
     private Socket clienSocket;
     private KVStore KVStore;
+    private boolean connectionStatus = true;
 
     public ClientHandler(Socket clientSocket, KVStore KVStore){
         this.clienSocket= clientSocket;
@@ -13,16 +14,22 @@ public class ClientHandler implements Runnable {
     @Override
     public void run(){
         try{
+            //Handle input from the socket
             BufferedReader in = new BufferedReader(new InputStreamReader(clienSocket.getInputStream()));
+
+            //Write the output 
             PrintWriter out = new PrintWriter(clienSocket.getOutputStream(), true);
 
+            //Read the input and store as string
             String requestLine = in.readLine();
-            if(requestLine!= null){
+            while(requestLine!= null && connectionStatus){
                 String[] req = requestLine.split(" ", 2);
                 if(req.length >=1){
                     String command= req[0].toUpperCase();
 
+                    //The query sent starts with the command followed by other details about key and value
                     switch(command){
+                        //Enter new data
                         case "SET":
                             if(req.length == 3){
                                 String key= req[1];
@@ -35,7 +42,7 @@ public class ClientHandler implements Runnable {
                                 out.println("Invalid SET operation");
                             }
                             break;
-                        
+                        //Retrieve data
                         case "GET":
                             String key= req[1];
                             Object value= KVStore.get(key);
@@ -46,7 +53,8 @@ public class ClientHandler implements Runnable {
                                 out.println("Not Found");
                             }
                             break;
-                        
+
+                        //Delete record
                         case "DELETE":
                             String key= req[1];
                             if(KVStore.delete(key)){
@@ -57,6 +65,7 @@ public class ClientHandler implements Runnable {
                             }
                             break;
                         
+                        //Update existing
                         case "UPDATE":
                             String key= req[1];
                             Object value= req[2];
@@ -67,6 +76,10 @@ public class ClientHandler implements Runnable {
                                 out.println("Error in update");
                             }
                             break;
+                        case "BYE":
+                            out.println("Closing connection......");
+                            connectionStatus = false;
+                            break;
                         
                         default:
                             out.println("Invalid Operation");
@@ -74,6 +87,19 @@ public class ClientHandler implements Runnable {
                     }
                     
                 }
+                else{
+                    out.println("Invalid Request");
+                }
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+        } finally{
+            try{
+                clienSocket.close();
+                System.out.println("Connection terminated");
+
+            } catch(Exception e){
+                e.printStackTrace();
             }
         }
     }

@@ -25,7 +25,13 @@ public class KVServer{
     }
 
     public static void main(String[]args) throws IOException{
-        new KVServer().start();
+        KVServer kvserver = new KVServer();
+        kvserver.start();
+        try{
+            Thread.sleep(Long.MAX_VALUE);
+        } catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
 }

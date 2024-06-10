@@ -5,5 +5,6 @@ The idea is to create a simple key-value database that listens to a port from wh
 The ClientHandler handles the input data from the open socket. Use buffered reader and retrieve data from inputdataStream.
 Store the input as a string and extract the command and the args from it and perform the necessary actions. The output is written by the printWriter and sent to the socket via the outputDataStream.
 Once the output is sent, the printwriter will flush the buffer (specified by the true argument passed to printwriter)
-
 The first basic implementation covers the simple operations of SET, GET, DELETE and UPDATE
+
+The Server component needs to call the client handler, open and close the socket as well. Using the thread.sleep to handle terminating of threads as a temporary fix

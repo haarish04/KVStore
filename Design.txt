@@ -7,4 +7,6 @@ Store the input as a string and extract the command and the args from it and per
 Once the output is sent, the printwriter will flush the buffer (specified by the true argument passed to printwriter)
 The first basic implementation covers the simple operations of SET, GET, DELETE and UPDATE
 
+The command BYE will be used to terminate session
+
 The Server component needs to call the client handler, open and close the socket as well. Using the thread.sleep to handle terminating of threads as a temporary fix

@@ -32,9 +32,9 @@ public class ClientHandler implements Runnable {
                         //Enter new data
                         case "SET":
                             if(req.length == 3){
-                                String key= req[1];
-                                Object value= req[2];
-                                KVStore.set(key,value);
+                                String setKey= req[1];
+                                Object setValue= req[2];
+                                KVStore.set(setKey,setValue);
                                 out.println("Record added");
 
                             }
@@ -44,10 +44,10 @@ public class ClientHandler implements Runnable {
                             break;
                         //Retrieve data
                         case "GET":
-                            String key= req[1];
-                            Object value= KVStore.get(key);
-                            if(value!= null){
-                                out.println("Value: "+ value.toString());
+                            String getKey= req[1];
+                            Object getValue= KVStore.get(getKey);
+                            if(getValue!= null){
+                                out.println("Value: "+ getValue.toString());
                             }
                             else{
                                 out.println("Not Found");
@@ -56,8 +56,8 @@ public class ClientHandler implements Runnable {
 
                         //Delete record
                         case "DELETE":
-                            String key= req[1];
-                            if(KVStore.delete(key)){
+                            String deleteKey= req[1];
+                            if(KVStore.delete(deleteKey)){
                                 out.println("Record Deleted");
                             }
                             else{
@@ -67,9 +67,9 @@ public class ClientHandler implements Runnable {
                         
                         //Update existing
                         case "UPDATE":
-                            String key= req[1];
-                            Object value= req[2];
-                            if(KVStore.update(key,value)){
+                            String updateKey= req[1];
+                            Object updateValue= req[2];
+                            if(KVStore.update(updateKey,updateValue)){
                                 out.println("Update Success");
                             }
                             else{

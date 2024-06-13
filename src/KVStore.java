@@ -33,5 +33,16 @@ public class KVStore {
 
     }
 
-    
+    public boolean update(String key, Object Value){
+        Object val=store.replace(key, Value);
+        if(val!=null)
+            return true;
+        else
+            return false;
+    }
+
+    private UUID generateUUID(){
+        return UUID.randomUUID();
+    }
+
 }

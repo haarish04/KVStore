@@ -1,11 +1,11 @@
 import java.util.*;
+import javafx.util.Pair;
 public class KVStore {
 
-    private static final Map<String, Object> store = new HashMap<>();
+    private static final Map<String, Pair<UUID, Object>> store = new HashMap<>();
 
-    public void test(String []args){
-
-        //Test case while initializing
+    public void test(){
+        //Test case
         set("abc", 100);
         System.out.println(get("abc"));
         if(delete("abc"))
@@ -16,12 +16,13 @@ public class KVStore {
     }
 
     public void set(String key, Object value ){
-        store.put(key, value);
+        UUID uuid= generateUUID();
+        store.put(key, new Pair<>(uuid, value));
     }
 
     public Object get(String key){
-        Object value= store.get(key);
-        return value;
+        Pair<UUID,Object> value= store.get(key);
+        return value.getValue();
     }
 
     public boolean delete(String key){
@@ -33,16 +34,24 @@ public class KVStore {
 
     }
 
-    public boolean update(String key, Object Value){
-        Object val=store.replace(key, Value);
-        if(val!=null)
+    public boolean update(String key, Object newValue){
+        Pair<UUID,Object> existingEntry=store.get(key);
+        if(existingEntry!=null){
+            UUID uuid= existingEntry.getKey();
+            store.put(key, new Pair<>(uuid, newValue));
             return true;
+        }
         else
             return false;
     }
 
     private UUID generateUUID(){
         return UUID.randomUUID();
+    }
+
+    protected UUID getUUIDforKey(String key){
+        Pair<UUID,Object> value= store.get(key);
+        return value.getKey();
     }
 
 }

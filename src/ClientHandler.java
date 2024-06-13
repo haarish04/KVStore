@@ -33,8 +33,8 @@ public class ClientHandler implements Runnable {
                         case "SET":
                             if(req.length == 3){
                                 String key= req[1];
-                                String value= req[2];
-                                KVStore.add(key,value);
+                                Object value= req[2];
+                                KVStore.set(key,value);
                                 out.println("Record added");
 
                             }

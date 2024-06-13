@@ -1,45 +1,35 @@
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
-import java.net.Socket;
+import java.util.*;
 
 public class KVClientTest {
 
-    private static final String SERVER_HOST = "localhost";
-    private static final int SERVER_PORT = 8000;
-
     public static void main(String[] args) {
-        try (Socket socket = new Socket(SERVER_HOST, SERVER_PORT);
-             PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
-             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()))) {
+        KVStore kvStore = new KVStore();
 
-            // Send a SET command
-            out.println("SET key1 value1");
-            System.out.println(in.readLine()); // Should print "Record added"
+        // Test adding a key-value pair
+        kvStore.set("abc", 100);
+        System.out.println(kvStore.get("abc")); // Expected output: 100
 
-            // Send a GET command
-            out.println("GET key1");
-            System.out.println(in.readLine()); // Should print "Value: value1" or similar
+        // Test retrieving the UUID for a given key
+        UUID uuidForAbc = kvStore.getUUIDforKey("abc");
+        System.out.println(uuidForAbc); // Expected output: UUID of the key "abc"
 
-            // Send an UPDATE command
-            out.println("UPDATE key1 newValue1");
-            System.out.println(in.readLine()); // Should print "Update Success"
+        // Test updating a key-value pair
+        kvStore.update("abc", 200);
+        System.out.println(kvStore.get("abc")); // Expected output: 200
 
-            // Send a DELETE command
-            out.println("DELETE key1");
-            System.out.println(in.readLine()); // Should print "Record Deleted"
+        // Test deleting a key-value pair
+        if (kvStore.delete("abc")) {
+            System.out.println("Deleted");
+        } else {
+            System.out.println("Invalid delete");
+        }
 
-            // Attempt to GET the deleted key
-            out.println("GET key1");
-            System.out.println(in.readLine()); // Should indicate the key is not found
+        // Attempt to retrieve a deleted key
+        System.out.println(kvStore.get("abc")); // Expected output: null
 
-            // Close the connection gracefully
-            out.println("BYE");
-            System.out.println(in.readLine()); // Should print "Closing connection..."
-
-        } catch (Exception e) {
-            System.err.println("An error occurred while communicating with the server.");
-            e.printStackTrace();
+        // Test adding and deleting a non-existent key
+        if (!kvStore.delete("nonExistentKey")) {
+            System.out.println("Invalid delete");
         }
     }
 }

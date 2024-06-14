@@ -6,7 +6,17 @@ The ClientHandler handles the input data from the open socket. Use buffered read
 Store the input as a string and extract the command and the args from it and perform the necessary actions. The output is written by the printWriter and sent to the socket via the outputDataStream.
 Once the output is sent, the printwriter will flush the buffer (specified by the true argument passed to printwriter)
 The first basic implementation covers the simple operations of SET, GET, DELETE and UPDATE
-
 The command BYE will be used to terminate session
 
-The Server component needs to call the client handler, open and close the socket as well. Using the thread.sleep to handle terminating of threads as a temporary fix
+The KVServer component is used to host the database on a specified port and expose the socket endpoint to the client
+Using the thread.sleep to handle terminating of threads as a temporary fix
+
+The KVStore is the main component which handles all the operations and maintains the actual store which is a hashmap.
+It also consists of additional helper methods for handling the UUID.
+
+The hashmap is of the format <key, <UUID, value>>
+The key is used to identify the record and perform actions as necessary.
+The UUID is a unique identifier for every key value insertion, which can be used later on for logging and error debugging.
+
+For storing records we are using a ConcurrentHashMap. HashMap provides good performance for basic operations such as get, set, delete.
+The concurrent version is essential for maintaining thread-safety and handling concurrent requests. 

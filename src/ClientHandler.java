@@ -45,13 +45,18 @@ public class ClientHandler implements Runnable {
 
                         //Retrieve data
                         case "GET":
-                            String getKey= req[1];
-                            Object getValue= KVStore.get(getKey);
-                            if(getValue!= null){
-                                out.println("Value: "+ getValue.toString());
+                            if(req.length == 1){
+                                KVStore.getAll();
                             }
                             else{
-                                out.println("Not Found");
+                                String getKey= req[1];
+                                Object getValue= KVStore.get(getKey);
+                                if(getValue!= null){
+                                    out.println("Value: "+ getValue.toString());
+                                }
+                                else{
+                                    out.println("Not Found");
+                                }
                             }
                             break;
 

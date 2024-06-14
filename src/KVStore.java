@@ -27,6 +27,10 @@ public class KVStore {
         return value.getValue();
     }
 
+    public String getAll(){
+        return store.toString();
+    }
+
     public boolean delete(String key){
         Object value= store.remove(key);
         if(value!= null)

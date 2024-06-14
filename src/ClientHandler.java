@@ -42,6 +42,7 @@ public class ClientHandler implements Runnable {
                                 out.println("Invalid SET operation");
                             }
                             break;
+
                         //Retrieve data
                         case "GET":
                             String getKey= req[1];
@@ -76,6 +77,8 @@ public class ClientHandler implements Runnable {
                                 out.println("Error in update");
                             }
                             break;
+                        
+                        //Terminate connection
                         case "BYE":
                             out.println("Closing connection......");
                             connectionStatus = false;

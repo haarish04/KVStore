@@ -1,8 +1,10 @@
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
+
 import javafx.util.Pair;
 public class KVStore {
 
-    private static final Map<String, Pair<UUID, Object>> store = new HashMap<>();
+    private static final Map<String, Pair<UUID, Object>> store = new ConcurrentHashMap<>();
 
     public void test(){
         //Test case

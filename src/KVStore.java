@@ -6,21 +6,25 @@ public class KVStore {
 
     private static final Map<String, Pair<UUID, Object>> store = new ConcurrentHashMap<>();
 
-    public void set(String key, Object value ){
-        UUID uuid= generateUUID();
+    public void createCollection(String collName){
+
+    }
+
+    public void setRecord(String key, Object value ){
+        UUID uuid= UUID.randomUUID();
         store.put(key, new Pair<>(uuid, value));
     }
 
-    public Object get(String key){
+    public Object getRecord(String key){
         Pair<UUID,Object> value= store.get(key);
         return value.getValue();
     }
 
-    public String getAll(){
+    public String getAllRecords(){
         return store.toString();
     }
 
-    public boolean delete(String key){
+    public boolean deleteRecord(String key){
         Object value= store.remove(key);
         if(value!= null)
             return true;
@@ -28,7 +32,7 @@ public class KVStore {
             return false;
     }
 
-    public boolean update(String key, Object newValue){
+    public boolean updateRecord(String key, Object newValue){
         Pair<UUID,Object> existingEntry=store.get(key);
         if(existingEntry!=null){
             UUID uuid= existingEntry.getKey();
@@ -37,10 +41,6 @@ public class KVStore {
         }
         else
             return false;
-    }
-
-    private UUID generateUUID(){
-        return UUID.randomUUID();
     }
 
     protected UUID getUUIDforKey(String key){

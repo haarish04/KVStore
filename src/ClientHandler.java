@@ -34,7 +34,7 @@ public class ClientHandler implements Runnable {
                             if(req.length == 3){
                                 String setKey= req[1];
                                 Object setValue= req[2];
-                                KVStore.set(setKey,setValue);
+                                KVStore.setRecord(setKey,setValue);
                                 out.println("Record added");
 
                             }
@@ -46,11 +46,11 @@ public class ClientHandler implements Runnable {
                         //Retrieve data
                         case "GET":
                             if(req.length == 1){
-                                KVStore.getAll();
+                                KVStore.getAllRecords();
                             }
                             else{
                                 String getKey= req[1];
-                                Object getValue= KVStore.get(getKey);
+                                Object getValue= KVStore.getRecord(getKey);
                                 if(getValue!= null){
                                     out.println("Value: "+ getValue.toString());
                                 }
@@ -63,7 +63,7 @@ public class ClientHandler implements Runnable {
                         //Delete record
                         case "DELETE":
                             String deleteKey= req[1];
-                            if(KVStore.delete(deleteKey)){
+                            if(KVStore.deleteRecord(deleteKey)){
                                 out.println("Record Deleted");
                             }
                             else{
@@ -75,7 +75,7 @@ public class ClientHandler implements Runnable {
                         case "UPDATE":
                             String updateKey= req[1];
                             Object updateValue= req[2];
-                            if(KVStore.update(updateKey,updateValue)){
+                            if(KVStore.updateRecord(updateKey,updateValue)){
                                 out.println("Update Success");
                             }
                             else{

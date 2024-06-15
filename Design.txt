@@ -20,3 +20,7 @@ The UUID is a unique identifier for every key value insertion, which can be used
 
 For storing records we are using a ConcurrentHashMap. HashMap provides good performance for basic operations such as get, set, delete.
 The concurrent version is essential for maintaining thread-safety and handling concurrent requests. 
+
+The next part of the implementation involves grouping records together into collections similar to mongoDB, this can be used to organize data
+To achieve this, each collection is a concurrentHashMap which stores individual records (hashmaps) along with the identifier object.
+This identifier object consists of key to identify it and a tag, which can be used to store some additional info about the collection.

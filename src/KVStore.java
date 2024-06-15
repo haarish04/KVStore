@@ -1,21 +1,10 @@
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
-
 import javafx.util.Pair;
+
 public class KVStore {
 
     private static final Map<String, Pair<UUID, Object>> store = new ConcurrentHashMap<>();
-
-    public void test(){
-        //Test case
-        set("abc", 100);
-        System.out.println(get("abc"));
-        if(delete("abc"))
-            System.out.println("Deleted");
-        else
-            System.out.println("Invalid delete");
-
-    }
 
     public void set(String key, Object value ){
         UUID uuid= generateUUID();
@@ -37,7 +26,6 @@ public class KVStore {
             return true;
         else
             return false;
-
     }
 
     public boolean update(String key, Object newValue){

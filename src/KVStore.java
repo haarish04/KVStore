@@ -2,30 +2,43 @@ import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import javafx.util.Pair;
 
+
 public class KVStore {
 
-    private static final Map<String, Pair<UUID, Object>> store = new ConcurrentHashMap<>();
+    private class collectionID{
+        String name;
+        UUID uuid;
+        String tag;
+    }
+
+    private static final Map<String, Pair<UUID, Object>> collection = new ConcurrentHashMap<>();
+    private static final Map<collectionID, ConcurrentHashMap<String, Pair<UUID, Object>>> store = new ConcurrentHashMap<>();
+
 
     public void createCollection(String collName){
-
+        UUID uuid = UUID.randomUUID();
+        collectionID cid = new collectionID();
+        cid.name = collName;
+        cid.uuid = uuid;
+        store.put(cid, new ConcurrentHashMap<String, Pair<UUID, Object>>());
     }
 
     public void setRecord(String key, Object value ){
         UUID uuid= UUID.randomUUID();
-        store.put(key, new Pair<>(uuid, value));
+        collection.put(key, new Pair<>(uuid, value));
     }
 
     public Object getRecord(String key){
-        Pair<UUID,Object> value= store.get(key);
+        Pair<UUID,Object> value= collection.get(key);
         return value.getValue();
     }
 
     public String getAllRecords(){
-        return store.toString();
+        return collection.toString();
     }
 
     public boolean deleteRecord(String key){
-        Object value= store.remove(key);
+        Object value= collection.remove(key);
         if(value!= null)
             return true;
         else
@@ -33,10 +46,10 @@ public class KVStore {
     }
 
     public boolean updateRecord(String key, Object newValue){
-        Pair<UUID,Object> existingEntry=store.get(key);
+        Pair<UUID,Object> existingEntry=collection.get(key);
         if(existingEntry!=null){
             UUID uuid= existingEntry.getKey();
-            store.put(key, new Pair<>(uuid, newValue));
+            collection.put(key, new Pair<>(uuid, newValue));
             return true;
         }
         else
@@ -44,7 +57,7 @@ public class KVStore {
     }
 
     protected UUID getUUIDforKey(String key){
-        Pair<UUID,Object> value= store.get(key);
+        Pair<UUID,Object> value= collection.get(key);
         return value.getKey();
     }
 

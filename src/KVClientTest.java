@@ -20,6 +20,7 @@ public class KVClientTest {
         System.out.println(kvStore.getRecord("abc")); // Expected output: 200
 
         //Write test for getAll
+        System.out.println(kvStore.getAllRecords());
 
         // Test deleting a key-value pair
         if (kvStore.deleteRecord("abc")) {
@@ -37,5 +38,6 @@ public class KVClientTest {
         }
 
         //Write test for closing connection
+
     }
 }

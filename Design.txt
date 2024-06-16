@@ -24,5 +24,9 @@ The concurrent version is essential for maintaining thread-safety and handling c
 The next part of the implementation involves grouping records together into collections similar to mongoDB, this can be used to organize data
 To achieve this, each collection is a concurrentHashMap which stores individual records (hashmaps) along with the identifier object.
 This identifier object consists of key to identify it and a tag, which can be used to store some additional info about the collection.
+
 While creating a new collection by the user. There needs to be a central repo of sorts that will store all the collections.
-Instead of a global hashmap storing all the collections, I am creating a class just to store the ID of each collections which will be used to reference them.
+Instead of a global hashmap storing all the collections, I wanted to create a class just to store the ID of each collections which will be used to reference them.
+But I cannot do this as every time the create collection is invoked, the map created will be limited to the scope of the method and will not be avaible globally.
+So I decided to use a static hashmap in the KVStore class to store all the collections. This acts as a central repo of all the collections. Later on I will look into ways to serialize and deserialize data and try to store externally.
+

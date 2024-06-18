@@ -3,7 +3,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import javafx.util.Pair;
 
 
-public class KVStore {
+public class KVServices {
 
     private class collectionID{
         String name;

@@ -3,12 +3,12 @@ import java.net.Socket;
 
 public class ClientHandler implements Runnable {
     private Socket clienSocket;
-    private KVStore KVStore;
+    private KVServices KVServices;
     private boolean connectionStatus = true;
 
-    public ClientHandler(Socket clientSocket, KVStore KVStore){
+    public ClientHandler(Socket clientSocket, KVServices KVServices){
         this.clienSocket= clientSocket;
-        this.KVStore=KVStore;
+        this.KVServices=KVServices;
     }
     
     @Override
@@ -34,7 +34,7 @@ public class ClientHandler implements Runnable {
                             if(req.length == 3){
                                 String setKey= req[1];
                                 Object setValue= req[2];
-                                KVStore.setRecord(setKey,setValue);
+                                KVServices.setRecord(setKey,setValue);
                                 out.println("Record added");
 
                             }
@@ -46,11 +46,11 @@ public class ClientHandler implements Runnable {
                         //Retrieve data
                         case "GET":
                             if(req.length == 1){
-                                KVStore.getAllRecords();
+                                KVServices.getAllRecords();
                             }
                             else{
                                 String getKey= req[1];
-                                Object getValue= KVStore.getRecord(getKey);
+                                Object getValue= KVServices.getRecord(getKey);
                                 if(getValue!= null){
                                     out.println("Value: "+ getValue.toString());
                                 }
@@ -63,7 +63,7 @@ public class ClientHandler implements Runnable {
                         //Delete record
                         case "DELETE":
                             String deleteKey= req[1];
-                            if(KVStore.deleteRecord(deleteKey)){
+                            if(KVServices.deleteRecord(deleteKey)){
                                 out.println("Record Deleted");
                             }
                             else{
@@ -75,7 +75,7 @@ public class ClientHandler implements Runnable {
                         case "UPDATE":
                             String updateKey= req[1];
                             Object updateValue= req[2];
-                            if(KVStore.updateRecord(updateKey,updateValue)){
+                            if(KVServices.updateRecord(updateKey,updateValue)){
                                 out.println("Update Success");
                             }
                             else{

@@ -4,7 +4,7 @@ import java.net.Socket;
 
 public class KVServer{
     private static final int port = 8000;
-    private KVStore KVStore = new KVStore();
+    private KVServices KVServices = new KVServices();
     private ServerSocket serverSocket;
 
     public void start() throws IOException{
@@ -13,7 +13,7 @@ public class KVServer{
 
         while(true){
             Socket clientSocket = serverSocket.accept();
-            new Thread(new ClientHandler(clientSocket, KVStore)).start();
+            new Thread(new ClientHandler(clientSocket, KVServices)).start();
         }
     }
 

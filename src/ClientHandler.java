@@ -30,13 +30,18 @@ public class ClientHandler implements Runnable {
                     //The query sent starts with the command followed by other details about key and value
                     switch(command){
                         case "CREATE":
-                            if(req.length == 2){
+                            if(req.length >= 2){
                                 String name= req[1];
                                 StringBuilder tag= new StringBuilder();
-                                for(String s: req)
-                                    tag.append(s).append(" ");
-                                KVServices.createCollection(name, tag.toString());                                
+
+                                for(int i=2;i<req.length;i++)
+                                    tag.append(req[i]).append(" ");
+                                KVServices.createCollection(name, tag.toString());   
                             }
+                            else{
+                                out.println("Invalid request");
+                            }
+                            break;
 
                         //Enter new data
                         case "SET":

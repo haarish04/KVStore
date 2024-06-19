@@ -15,11 +15,12 @@ public class KVServices {
     private static final Map<collectionID, ConcurrentHashMap<String, Pair<UUID, Object>>> store = new ConcurrentHashMap<>();
 
 
-    public void createCollection(String collName){
+    public void createCollection(String collName, String tag){
         UUID uuid = UUID.randomUUID();
         collectionID cid = new collectionID();
         cid.name = collName;
         cid.uuid = uuid;
+        cid.tag= tag;
         store.put(cid, new ConcurrentHashMap<String, Pair<UUID, Object>>());
     }
 

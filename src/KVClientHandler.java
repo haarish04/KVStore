@@ -36,7 +36,7 @@ public class KVClientHandler implements Runnable {
 
                                 for(int i=2;i<req.length;i++)
                                     tags.append(req[i]).append(" ");
-                                KVServices.createCollection(name, tags.toString());   
+                                out.println(KVServices.createCollection(name, tags.toString()));   
                             }
                             else{
                                 out.println("Invalid request");

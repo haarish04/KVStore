@@ -1,6 +1,6 @@
 import java.util.*;
 
-public class KVClientTest {
+public class KVServicesTest {
 
     public static void main(String[] args) {
         KVServices KVServices = new KVServices();

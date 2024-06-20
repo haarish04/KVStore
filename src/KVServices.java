@@ -8,19 +8,22 @@ public class KVServices {
     private class collectionID{
         String name;
         UUID uuid;
-        String tag;
+        String tags;
+
+        collectionID(String collName, String tags, UUID uuid){
+            this.name = collName;
+            this.uuid = uuid;
+            this.tags = tags;
+        }
     }
 
     private static final Map<String, Pair<UUID, Object>> collection = new ConcurrentHashMap<>();
     private static final Map<collectionID, ConcurrentHashMap<String, Pair<UUID, Object>>> store = new ConcurrentHashMap<>();
 
 
-    public void createCollection(String collName, String tag){
+    public void createCollection(String collName, String tags){
         UUID uuid = UUID.randomUUID();
-        collectionID cid = new collectionID();
-        cid.name = collName;
-        cid.uuid = uuid;
-        cid.tag= tag;
+        collectionID cid = new collectionID(collName, tags, uuid);
         store.put(cid, new ConcurrentHashMap<String, Pair<UUID, Object>>());
     }
 

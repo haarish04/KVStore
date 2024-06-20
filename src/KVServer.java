@@ -13,7 +13,7 @@ public class KVServer{
 
         while(true){
             Socket clientSocket = serverSocket.accept();
-            new Thread(new ClientHandler(clientSocket, KVServices)).start();
+            new Thread(new KVClientHandler(clientSocket, KVServices)).start();
         }
     }
 

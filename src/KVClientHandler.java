@@ -25,24 +25,65 @@ public class KVClientHandler implements Runnable {
             while(requestLine!= null && connectionStatus){
                 String[] req = requestLine.split(" ", 2);
                 if(req.length >=1){
-                    if(req[0].toUpperCase()== "CREATE"){
-                        if(req.length >= 2){
-                            String name= req[1];
-                            StringBuilder tags= new StringBuilder();
+                    String command = req[0].toUpperCase();
+                    switch(command){
 
-                            for(int i=2;i<req.length;i++)
-                                tags.append(req[i]).append(" ");
-                            KVServices.createCollection(name, tags.toString());   
-                        }
-                        else{
-                            out.println("Invalid request");
-                        }
+                        //Create new collection with some tags
+                        case "CREATE":
+                            if(req.length >= 2){
+                                String name= req[1];
+                                StringBuilder tags= new StringBuilder();
 
+                                for(int i=2;i<req.length;i++)
+                                    tags.append(req[i]).append(" ");
+                                KVServices.createCollection(name, tags.toString());   
+                            }
+                            else{
+                                out.println("Invalid request");
+                            }
+                            break;
+                        
+                        //Append new tags to the collection
+                        case "ADDTAG":
+                            if(req.length>=2){
+                                String name= req[1];
+                                StringBuilder tags = new StringBuilder();
+
+                                for(int i=2;i<req.length;i++)
+                                    tags.append(req[i]).append(" ");
+                                KVServices.addCollectionTag(name, tags.toString());
+                            }
+                            else{
+                                out.println("Invalid Add Tag");
+                            }
+                            break;
+                        
+                        //Delete all the tags associate with the collection 
+                        case "DELTAG":
+                            if(req.length==2){
+                                String name= req[1];
+                                KVServices.deleteCollectionTag(name);
+                            }
+                            else{
+                                out.println("Invalid Delete Tag");
+                            }
+                            break;
+                        
+                        //Rename collection name
+                        case "RENAME":
+                            if(req.length == 3){
+                                String oldCollName= req[1];
+                                String newCollName= req[2];
+                                KVServices.renameCollection(oldCollName, newCollName);
+                            }
+                            else{
+                                out.println("Invalid Rename");
+                            }
+                            break;
                     }
-                    
 
                     //The query sent starts with the command followed by other details about key and value
-                    switch(command){
+                    switch(req[0]){
 
                         //Enter new data
                         case "SET":

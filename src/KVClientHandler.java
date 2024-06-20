@@ -1,12 +1,12 @@
 import java.io.*;
 import java.net.Socket;
 
-public class ClientHandler implements Runnable {
+public class KVClientHandler implements Runnable {
     private Socket clienSocket;
     private KVServices KVServices;
     private boolean connectionStatus = true;
 
-    public ClientHandler(Socket clientSocket, KVServices KVServices){
+    public KVClientHandler(Socket clientSocket, KVServices KVServices){
         this.clienSocket= clientSocket;
         this.KVServices=KVServices;
     }
@@ -25,23 +25,24 @@ public class ClientHandler implements Runnable {
             while(requestLine!= null && connectionStatus){
                 String[] req = requestLine.split(" ", 2);
                 if(req.length >=1){
-                    String command= req[0].toUpperCase();
+                    if(req[0].toUpperCase()== "CREATE"){
+                        if(req.length >= 2){
+                            String name= req[1];
+                            StringBuilder tags= new StringBuilder();
+
+                            for(int i=2;i<req.length;i++)
+                                tags.append(req[i]).append(" ");
+                            KVServices.createCollection(name, tags.toString());   
+                        }
+                        else{
+                            out.println("Invalid request");
+                        }
+
+                    }
+                    
 
                     //The query sent starts with the command followed by other details about key and value
                     switch(command){
-                        case "CREATE":
-                            if(req.length >= 2){
-                                String name= req[1];
-                                StringBuilder tag= new StringBuilder();
-
-                                for(int i=2;i<req.length;i++)
-                                    tag.append(req[i]).append(" ");
-                                KVServices.createCollection(name, tag.toString());   
-                            }
-                            else{
-                                out.println("Invalid request");
-                            }
-                            break;
 
                         //Enter new data
                         case "SET":

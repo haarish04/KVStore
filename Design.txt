@@ -8,10 +8,17 @@ Once the output is sent, the printwriter will flush the buffer (specified by the
 The first basic implementation covers the simple operations of SET, GET, DELETE and UPDATE
 The command BYE will be used to terminate session
 
+The user will be able to create collections and specify any tags associated with them.
+They will also have the option to add tags to existing collection and also delete these tags.
+Lastly, the existing collections can be also deleted.
+
+
+<---------------------------------------------------------------------------------->
+
 The KVServer component is used to host the database on a specified port and expose the socket endpoint to the client
 Using the thread.sleep to handle terminating of threads as a temporary fix
 
-The KVStore is the main component which handles all the operations and maintains the actual store which is a hashmap.
+The KVServices is the main component which handles all the operations and maintains the actual store which is a hashmap.
 It also consists of additional helper methods for handling the UUID.
 
 The hashmap is of the format <key, <UUID, value>>
@@ -27,6 +34,6 @@ This identifier object consists of key to identify it and a tag, which can be us
 
 While creating a new collection by the user. There needs to be a central repo of sorts that will store all the collections.
 Instead of a global hashmap storing all the collections, I wanted to create a class just to store the ID of each collections which will be used to reference them.
-But I cannot do this as every time the create collection is invoked, the map created will be limited to the scope of the method and will not be avaible globally.
+But I cannot do this as every time the create collection is invoked, the map created will be limited to the scope of the method and will not be available globally.
 So I decided to use a static hashmap in the KVStore class to store all the collections. This acts as a central repo of all the collections. Later on I will look into ways to serialize and deserialize data and try to store externally.
 

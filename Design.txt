@@ -28,18 +28,19 @@ The UUID is a unique identifier for every key value insertion, which can be used
 For storing records we are using a ConcurrentHashMap. HashMap provides good performance for basic operations such as get, set, delete.
 The concurrent version is essential for maintaining thread-safety and handling concurrent requests.
 
+The next part of the implementation involves grouping records together into collections similar to mongoDB, this can be used to organize data
+To achieve this, each collection is a concurrentHashMap which stores individual records (hashmaps) along with the identifier object.
+This identifier object consists of key to identify it and a tag, which can be used to store some additional info about the collection.
+
 The user will have to specify the collection that they want to perform operations something like this:
 
 collection.set {key, value}
 collection.get {key}
 collection.delete {key}
 
-The next part of the implementation involves grouping records together into collections similar to mongoDB, this can be used to organize data
-To achieve this, each collection is a concurrentHashMap which stores individual records (hashmaps) along with the identifier object.
-This identifier object consists of key to identify it and a tag, which can be used to store some additional info about the collection.
-
 While creating a new collection by the user. There needs to be a central repo of sorts that will store all the collections.
 Instead of a global hashmap storing all the collections, I wanted to create a class just to store the ID of each collections which will be used to reference them.
 But I cannot do this as every time the create collection is invoked, the map created will be limited to the scope of the method and will not be available globally.
 So I decided to use a static hashmap in the KVStore class to store all the collections. This acts as a central repo of all the collections. Later on I will look into ways to serialize and deserialize data and try to store externally.
 
+While implementing the methods for get,set operations on

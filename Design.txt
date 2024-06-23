@@ -43,4 +43,5 @@ Instead of a global hashmap storing all the collections, I wanted to create a cl
 But I cannot do this as every time the create collection is invoked, the map created will be limited to the scope of the method and will not be available globally.
 So I decided to use a static hashmap in the KVStore class to store all the collections. This acts as a central repo of all the collections. Later on I will look into ways to serialize and deserialize data and try to store externally.
 
-While implementing the methods for get,set operations on
+While implementing the methods for get,set operations on individual records, I need to pass the collection name as well in the arguments.
+The problem is, I cannot use regex with switch case, so if a query looks like: col.get {args}, I will have to split the string at . and extract LHS as collection name and the following letters as the operation, followed by the args

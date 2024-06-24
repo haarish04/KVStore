@@ -101,7 +101,7 @@ public class KVServices {
 
     //Get specific records identified by key
     public Object getRecord(String key){
-        Pair<UUID,Object> value= record.get(key);
+        Pair<UUID,List<Object>> value= record.get(key);
         return value.getValue();
     }
 
@@ -120,8 +120,8 @@ public class KVServices {
     }
     
     //Update existing record
-    public boolean updateRecord(String key, Object newValue){
-        Pair<UUID,Object> existingEntry=record.get(key);
+    public boolean updateRecord(String key, Object oldValue, Object newValue){
+        Pair<UUID,ListObject> existingEntry=record.get(key);
         if(existingEntry!=null){
             UUID uuid= existingEntry.getKey();
             record.put(key, new Pair<>(uuid, newValue));

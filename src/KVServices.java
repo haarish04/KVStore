@@ -17,13 +17,30 @@ public class KVServices {
         }
     }
 
-    private static final Map<String, Pair<UUID, Object>> record = new ConcurrentHashMap<>();
+    private static final Map<String, Pair<UUID, List<Object>>> record = new ConcurrentHashMap<>();
     private static final Map<collectionID, ConcurrentHashMap<String, Pair<UUID, Object>>> store = new ConcurrentHashMap<>();
 
+    //Helper method to prevent duplicate collections
+    public boolean isDuplicateCollection(String collName){
+        boolean flag= false;
+        for(collectionID cid : store.keySet()){
+            if(cid.name == collName)
+                flag=true;
+        }
+        return flag;
+    }
+
+    //Helper method to check if key already exists
+    public boolean isExistingKey(String key){
+        return record.containsKey(key);
+    }
 
 
     //Service to create new collection
     public String createCollection(String collName, String tags){
+        if(isDuplicateCollection(collName)){
+            return "Collection with the name "+ collName + " already exists";
+        }
         UUID uuid = UUID.randomUUID();
         collectionID cid = new collectionID(collName, tags, uuid);
         Object o = store.put(cid, new ConcurrentHashMap<String, Pair<UUID, Object>>());
@@ -67,9 +84,19 @@ public class KVServices {
     }
 
     //Service to add new key-value pair to existing collection
-    public void setRecord(String key, Object value ){
-        UUID uuid= UUID.randomUUID();
-        record.put(key, new Pair<>(uuid, value));
+    public boolean setRecord(String key, Object value){
+        boolean flag= true;
+        if(!isExistingKey(key)){
+            UUID uuid= UUID.randomUUID();
+            List<Object> values= new ArrayList<>();
+            values.add(value);
+            record.put(key, new Pair<>(uuid, values));
+            return flag;
+        }
+        Pair<UUID, List<Object>>recordPair= record.get(key);
+        List<Object>values =recordPair.getValue();
+        values.add(value);
+        return flag;
     }
 
     //Get specific records identified by key

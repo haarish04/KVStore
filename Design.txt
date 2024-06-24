@@ -24,6 +24,7 @@ It also consists of additional helper methods for handling the UUID.
 The hashmap is of the format <key, <UUID, value>>
 The key is used to identify the record and perform actions as necessary.
 The UUID is a unique identifier for every key value insertion, which can be used later on for logging and error debugging.
+Value is a list of Objects. I am doing this in order to store multiple values associated to a key.
 
 For storing records we are using a ConcurrentHashMap. HashMap provides good performance for basic operations such as get, set, delete.
 The concurrent version is essential for maintaining thread-safety and handling concurrent requests.
@@ -42,6 +43,7 @@ While creating a new collection by the user. There needs to be a central repo of
 Instead of a global hashmap storing all the collections, I wanted to create a class just to store the ID of each collections which will be used to reference them.
 But I cannot do this as every time the create collection is invoked, the map created will be limited to the scope of the method and will not be available globally.
 So I decided to use a static hashmap in the KVStore class to store all the collections. This acts as a central repo of all the collections. Later on I will look into ways to serialize and deserialize data and try to store externally.
+
 
 While implementing the methods for get,set operations on individual records, I need to pass the collection name as well in the arguments.
 The problem is, I cannot use regex with switch case, so if a query looks like: col.get {args}, I will have to split the string at . and extract LHS as collection name and the following letters as the operation, followed by the args

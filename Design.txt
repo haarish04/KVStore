@@ -8,10 +8,9 @@ Once the output is sent, the printwriter will flush the buffer (specified by the
 The first basic implementation covers the simple operations of SET, GET, DELETE and UPDATE
 The command BYE will be used to terminate session
 
-The user will be able to create collections and specify any tags associated with them.
+The user will be able to create collections storing multiple records and specify any tags associated with them.
 They will also have the option to add tags to existing collection and also delete these tags.
-Lastly, the existing collections can be also deleted.
-
+Lastly, the existing collections can be also deleted or renamed
 
 <---------------------------------------------------------------------------------->
 
@@ -29,6 +28,14 @@ Value is a list of Objects. I am doing this in order to store multiple values as
 For storing records we are using a ConcurrentHashMap. HashMap provides good performance for basic operations such as get, set, delete.
 The concurrent version is essential for maintaining thread-safety and handling concurrent requests.
 
+--CREATE--
+
+--ADDTAG--
+
+--DELTAG--
+
+--RENAME--
+
 The next part of the implementation involves grouping records together into collections similar to mongoDB, this can be used to organize data
 To achieve this, each collection is a concurrentHashMap which stores individual records (hashmaps) along with the identifier object.
 This identifier object consists of key to identify it and a tag, which can be used to store some additional info about the collection.
@@ -44,6 +51,17 @@ Instead of a global hashmap storing all the collections, I wanted to create a cl
 But I cannot do this as every time the create collection is invoked, the map created will be limited to the scope of the method and will not be available globally.
 So I decided to use a static hashmap in the KVStore class to store all the collections. This acts as a central repo of all the collections. Later on I will look into ways to serialize and deserialize data and try to store externally.
 
+
+--SET--
+For each set operation, if the key does not exist, create a new key value pair. If the key already exists, append the value to the list of values associated with the key
+
+--GET--
+For each get operation, if the key exists, return the list of values associated with the key.
+For getAll, retur all records in the collection
+
+--DELETE--
+
+--UPDATE--
 
 While implementing the methods for get,set operations on individual records, I need to pass the collection name as well in the arguments.
 The problem is, I cannot use regex with switch case, so if a query looks like: col.get {args}, I will have to split the string at . and extract LHS as collection name and the following letters as the operation, followed by the args

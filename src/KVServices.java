@@ -17,8 +17,9 @@ public class KVServices {
         }
     }
 
-    private static final Map<String, Pair<UUID, Object>> collection = new ConcurrentHashMap<>();
+    private static final Map<String, Pair<UUID, Object>> record = new ConcurrentHashMap<>();
     private static final Map<collectionID, ConcurrentHashMap<String, Pair<UUID, Object>>> store = new ConcurrentHashMap<>();
+
 
 
     //Service to create new collection
@@ -34,13 +35,31 @@ public class KVServices {
     }
 
     //Service to add new tags to existing collection
-    public String addCollectionTag(String collName, String tags){
-        return "";
+    public boolean addCollectionTag(String collName, String tags){
+        StringBuilder tag= new StringBuilder(tags);
+        boolean flag=false;
+        for(collectionID cid : store.keySet()){
+            if(cid.name.equals(collName)){
+                StringBuilder temp = new StringBuilder(cid.tags);
+                temp.append(tag);
+                cid.tags = temp.toString();
+                flag=true;// Denotes operation is completed
+            }
+        }
+        return flag;
     } 
 
     //Delete Tags from existing collection
     public boolean deleteCollectionTag(String collName){
-        return false;
+        StringBuilder emptyTag= new StringBuilder("");
+        boolean flag=false;
+        for(collectionID cid : store.keySet()){
+            if(cid.name.equals(collName)){
+                cid.tags = emptyTag.toString();
+                flag=true;// Denotes operation is completed
+            }
+        }
+        return flag;
     }
 
     public boolean renameCollection(String oldCollName, String newCollName){
@@ -50,23 +69,23 @@ public class KVServices {
     //Service to add new key-value pair to existing collection
     public void setRecord(String key, Object value ){
         UUID uuid= UUID.randomUUID();
-        collection.put(key, new Pair<>(uuid, value));
+        record.put(key, new Pair<>(uuid, value));
     }
 
     //Get specific records identified by key
     public Object getRecord(String key){
-        Pair<UUID,Object> value= collection.get(key);
+        Pair<UUID,Object> value= record.get(key);
         return value.getValue();
     }
 
     //Get all the records
     public String getAllRecords(){
-        return collection.toString();
+        return record.toString();
     }
 
     //Delete existing key value pair
     public boolean deleteRecord(String key){
-        Object value= collection.remove(key);
+        Object value= record.remove(key);
         if(value!= null)
             return true;
         else
@@ -75,10 +94,10 @@ public class KVServices {
     
     //Update existing record
     public boolean updateRecord(String key, Object newValue){
-        Pair<UUID,Object> existingEntry=collection.get(key);
+        Pair<UUID,Object> existingEntry=record.get(key);
         if(existingEntry!=null){
             UUID uuid= existingEntry.getKey();
-            collection.put(key, new Pair<>(uuid, newValue));
+            record.put(key, new Pair<>(uuid, newValue));
             return true;
         }
         else
@@ -86,8 +105,8 @@ public class KVServices {
     }
     
     //Get UUID of record
-    protected UUID getUUIDforKey(String key){
-        Pair<UUID,Object> value= collection.get(key);
+    public UUID getUUIDforKey(String key){
+        Pair<UUID,Object> value= record.get(key);
         return value.getKey();
     }
 

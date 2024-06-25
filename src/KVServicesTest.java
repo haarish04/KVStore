@@ -15,15 +15,19 @@ public class KVServicesTest {
         UUID uuidForAbc = KVServices.getUUIDforKey("abc");
         System.out.println(uuidForAbc); // Expected output: UUID of the key "abc"
 
-        // Test updating a key-value pair
-        KVServices.updateRecord("abc", 200);
+        // Test appending a key-value pair to existing list of values
+        KVServices.updateRecord("abc",100, 200);
+        System.out.println(KVServices.getRecord("abc")); // Expected output: 200
+
+        //Test updating existing key-value
+        KVServices.updateRecord("abc",10);
         System.out.println(KVServices.getRecord("abc")); // Expected output: 200
 
         //Write test for getAll
         System.out.println(KVServices.getAllRecords());
 
         // Test deleting a key-value pair
-        if (KVServices.deleteRecord("abc")) {
+        if (KVServices.deleteKey("abc")) {
             System.out.println("Deleted");
         } else {
             System.out.println("Invalid delete");
@@ -33,7 +37,7 @@ public class KVServicesTest {
         System.out.println(KVServices.getRecord("abc")); // Expected output: null
 
         // Test adding and deleting a non-existent key
-        if (!KVServices.deleteRecord("nonExistentKey")) {
+        if (!KVServices.deleteKey("nonExistentKey")) {
             System.out.println("Invalid delete");
         }
 

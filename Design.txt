@@ -28,17 +28,21 @@ Value is a list of Objects. I am doing this in order to store multiple values as
 For storing records we are using a ConcurrentHashMap. HashMap provides good performance for basic operations such as get, set, delete.
 The concurrent version is essential for maintaining thread-safety and handling concurrent requests.
 
---CREATE--
-
---ADDTAG--
-
---DELTAG--
-
---RENAME--
-
 The next part of the implementation involves grouping records together into collections similar to mongoDB, this can be used to organize data
 To achieve this, each collection is a concurrentHashMap which stores individual records (hashmaps) along with the identifier object.
 This identifier object consists of key to identify it and a tag, which can be used to store some additional info about the collection.
+
+--CREATE--
+Create a new collection with the name specified and any tags specified by the user
+
+--ADDTAG--
+Add tags to existing collection, this appends the tag to the existing tag (stored as a string)
+
+--DELTAG--
+Delete tags from existing collection
+
+--RENAME--
+Rename collection name to specified name
 
 The user will have to specify the collection that they want to perform operations something like this:
 
@@ -59,7 +63,11 @@ For each set operation, if the key does not exist, create a new key value pair. 
 For each get operation, if the key exists, return the list of values associated with the key.
 For getAll, retur all records in the collection
 
---DELETE--
+--DELETEKEY--
+For each delete operation, if the key exists, remove the key values pair from the collection
+
+--DELETEVALUE--
+For each delete operation, if the key exists, remove the specified value from the list of values associated to the key
 
 --UPDATE--
 

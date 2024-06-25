@@ -119,9 +119,9 @@ public class KVClientHandler implements Runnable {
                             break;
 
                         //Delete record
-                        case "DELETE":
+                        case "DELETEKEY":
                             String deleteKey= req[1];
-                            if(KVServices.deleteRecord(deleteKey)){
+                            if(KVServices.deleteKey(deleteKey)){
                                 out.println("Record Deleted");
                             }
                             else{
@@ -132,8 +132,9 @@ public class KVClientHandler implements Runnable {
                         //Update existing
                         case "UPDATE":
                             String updateKey= req[1];
-                            Object updateValue= req[2];
-                            if(KVServices.updateRecord(updateKey,updateValue)){
+                            Object oldValue= req[2];
+                            Object newValue= req[3];
+                            if(KVServices.updateRecord(updateKey,oldValue, newValue)){
                                 out.println("Update Success");
                             }
                             else{

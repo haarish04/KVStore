@@ -32,6 +32,9 @@ The next part of the implementation involves grouping records together into coll
 To achieve this, each collection is a concurrentHashMap which stores individual records (hashmaps) along with the identifier object.
 This identifier object consists of key to identify it and a tag, which can be used to store some additional info about the collection.
 
+<---------------------------------------------------------------------------------->
+The following are the operations on collections
+
 --CREATE--
 Create a new collection with the name specified and any tags specified by the user
 
@@ -55,6 +58,8 @@ Instead of a global hashmap storing all the collections, I wanted to create a cl
 But I cannot do this as every time the create collection is invoked, the map created will be limited to the scope of the method and will not be available globally.
 So I decided to use a static hashmap in the KVStore class to store all the collections. This acts as a central repo of all the collections. Later on I will look into ways to serialize and deserialize data and try to store externally.
 
+<---------------------------------------------------------------------------------->
+The following are the operations on individual records
 
 --SET--
 For each set operation, if the key does not exist, create a new key value pair. If the key already exists, append the value to the list of values associated with the key
@@ -70,6 +75,10 @@ For each delete operation, if the key exists, remove the key values pair from th
 For each delete operation, if the key exists, remove the specified value from the list of values associated to the key
 
 --UPDATE--
+The update can be of two types, one is appending a new value to existing key, the other is to specify an existing value and replace with new one.
+If user passes three arguments, key, old value and new value then old value is updated. If the user only passes key and value then it is appended to list of values.
+
+<---------------------------------------------------------------------------------->
 
 While implementing the methods for get,set operations on individual records, I need to pass the collection name as well in the arguments.
 The problem is, I cannot use regex with switch case, so if a query looks like: col.get {args}, I will have to split the string at . and extract LHS as collection name and the following letters as the operation, followed by the args

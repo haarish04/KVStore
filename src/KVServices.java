@@ -145,25 +145,10 @@ public class KVServices {
     }
 
     //Update existing key-value
-    public int updateRecord(String key,Object oldValue, Object newValue){
-        return 0;
+    public boolean updateRecord(String key,Object oldValue, Object newValue){
+        boolean flag= false;
+        return flag;
     }
-    
-    //Append new value to list of values
-    public int updateRecord(String key, Object Value){
-        
-        Pair<UUID,List<Object>> existingEntry=record.get(key);
-        if(existingEntry!=null){
-
-            return 1;
-        }
-        
-        else
-            return 0;
-        
-        
-    }
-
     
     //Get UUID of record
     public UUID getUUIDforKey(String key){

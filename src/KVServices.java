@@ -75,7 +75,10 @@ public class KVServices {
         boolean flag=false;
         for(collectionID cid : store.keySet()){
             if(cid.name.equals(collName)){
+                ConcurrentHashMap<String, Pair<UUID, Object>> collectionToUpdate = store.get(cid);
+                store.remove(cid);
                 cid.tags = "";
+                store.put(cid, collectionToUpdate);
                 flag=true;// Denotes operation is completed
             }
         }
@@ -84,7 +87,17 @@ public class KVServices {
 
     //Rename existing collection
     public boolean renameCollection(String oldCollName, String newCollName){
-        return false;
+        boolean flag = false;
+        for (collectionID cid: store.keySet()){
+            if(cid.name.equals(oldCollName)){
+                ConcurrentHashMap<String, Pair<UUID, Object>> collectionToUpdate = store.get(cid);
+                store.remove(cid);
+                cid.name = newCollName;
+                store.put(cid, collectionToUpdate);
+                flag=true;// Denotes operation is completed
+            }
+        }
+        return flag;
     }
 
 

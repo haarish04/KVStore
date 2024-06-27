@@ -118,16 +118,28 @@ public class KVClientHandler implements Runnable {
                             }
                             break;
 
-                        //Delete record
+                        //Delete entire key value record
                         case "DELETEKEY":
                             String deleteKey= req[1];
-                            if(KVServices.deleteKey(deleteKey)){
+                            if(KVServices.deleteKey(deleteKey))
                                 out.println("Record Deleted");
-                            }
-                            else{
+                            
+                            else
                                 out.println("Error in Delete");
-                            }
+                            
                             break;
+                        
+                        //Delete value from existing key value list
+                        case "DELETEVALUE":
+                            String deletekey= req[1];
+                            String deleteValue= req[2];
+                            if(KVServices.deleteValue(deletekey,deleteValue))
+                                out.println("Value Deleted");
+                            else
+                                out.println("Delete error !! Value not found");
+                            
+                            break;
+                            
                         
                         //Update existing
                         case "UPDATE":

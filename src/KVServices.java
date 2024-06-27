@@ -141,8 +141,8 @@ public class KVServices {
     //Delete value from list of values associated with the key
     public boolean deleteValue(String key, Object value){
         Pair<UUID, List<Object>> deleteFromValues= record.get(key);
-        List<Object> valuelist= deleteFromValues.getValue();
-        if(valuelist.remove(value))
+        List<Object> valueList= deleteFromValues.getValue();
+        if(valueList.remove(value))
             return true;
         
             return false;
@@ -150,6 +150,13 @@ public class KVServices {
 
     //Update existing key-value
     public boolean updateRecord(String key,Object oldValue, Object newValue){
+        Pair<UUID, List<Object>> updateExistingValue= record.get(key);
+        List <Object> valueList = updateExistingValue.getValue();
+        for (Object val : valueList){
+            if(val.equals(oldValue))
+            valueList.set(valueList.indexOf(oldValue), newValue);// Find index of oldValue and replace with newValue
+            return true;
+        }
         return false;
     }
     

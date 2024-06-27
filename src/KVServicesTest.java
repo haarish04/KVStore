@@ -19,9 +19,9 @@ public class KVServicesTest {
         KVServices.updateRecord("abc",100, 200);
         System.out.println(KVServices.getRecord("abc")); // Expected output: 200
 
-        //Test updating existing key-value
-        KVServices.updateRecord("abc",10);
-        System.out.println(KVServices.getRecord("abc")); // Expected output: 200
+        //Test adding value to existing key-value
+        KVServices.setRecord("abc",10);
+        System.out.println(KVServices.getRecord("abc")); // Expected output: {200,10}
 
         //Write test for getAll
         System.out.println(KVServices.getAllRecords());

@@ -139,6 +139,11 @@ public class KVServices {
             return false;
     }
 
+    //Delete value from list of values associated with the key
+    public boolean deleteValue(String key, Object value){
+        return false;
+    }
+
     //Update existing key-value
     public int updateRecord(String key,Object oldValue, Object newValue){
         return 0;

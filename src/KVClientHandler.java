@@ -90,8 +90,8 @@ public class KVClientHandler implements Runnable {
                             if(req.length == 3){
                                 String setKey= req[1];
                                 Object setValue= req[2];
-                                if(KVServices.setRecord(setKey,setValue))
-                                    out.println("Record added");
+                                if(KVServices.setRecord(setKey,setValue)==0)
+                                    out.println("New Record created");
                                 else
                                     out.println("Key already exists, added to list of values ");
 

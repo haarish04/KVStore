@@ -102,20 +102,19 @@ public class KVServices {
 
 
     //Service to add new key-value pair to existing collection
-    public boolean setRecord(String key, Object value){
-        boolean flag= true;
+    public int setRecord(String key, Object value){
         if(!isExistingKey(key)){
             UUID uuid= UUID.randomUUID();
             List<Object> values= new ArrayList<>();
             values.add(value);
             record.put(key, new Pair<>(uuid, values));
-            return flag;
+            return 0;
         }
         Pair<UUID, List<Object>>recordPair= record.get(key);
         List<Object>values =recordPair.getValue();
         values.add(value);
         record.put(key, recordPair);
-        return flag;
+        return 1;
     }
 
 

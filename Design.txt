@@ -62,7 +62,8 @@ So I decided to use a static hashmap in the KVStore class to store all the colle
 The following are the operations on individual records
 
 --SET--
-For each set operation, if the key does not exist, create a new key value pair. If the key already exists, append the value to the list of values associated with the key
+For each set operation, if the key does not exist, create a new key value pair. 
+If the key already exists, append the value to the list of values associated with the key
 
 --GET--
 For each get operation, if the key exists, return the list of values associated with the key.
@@ -75,7 +76,7 @@ For each delete operation, if the key exists, remove the key values pair from th
 For each delete operation, if the key exists, remove the specified value from the list of values associated to the key
 
 --UPDATE--
-For each update operation, if the key exists, update the value associated with the key. The user passes three arguments, key, old value and new value then old value is updated. If the user only passes key and value then it is appended to list of values.
+For each update operation, if the key exists, update the value associated with the key. The user passes three arguments, key, old value and new value then old value is updated.
 
 <---------------------------------------------------------------------------------->
 

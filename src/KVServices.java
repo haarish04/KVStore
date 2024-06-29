@@ -168,12 +168,11 @@ public class KVServices {
 
     //Get UUID for collection
     public UUID getUUIDforCollection(String collName){
-        UUID colluuid;
         for (collectionID cid: store.keySet()){
             if(cid.name == collName)
-                colluuid = cid.uuid;
+                return cid.uuid;
         }
-        return colluuid;
+        return null;
     }
 
 }

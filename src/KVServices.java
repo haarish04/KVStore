@@ -166,4 +166,14 @@ public class KVServices {
         return value.getKey();
     }
 
+    //Get UUID for collection
+    public UUID getUUIDforCollection(String collName){
+        UUID colluuid;
+        for (collectionID cid: store.keySet()){
+            if(cid.name == collName)
+                colluuid = cid.uuid;
+        }
+        return colluuid;
+    }
+
 }

@@ -42,7 +42,7 @@ public class KVServices {
         if(isExistingCollection(collName)){
             return "Collection with the name "+ collName + " already exists";
         }
-        UUID uuid = UUID.randomUUID();
+        final UUID uuid = UUID.randomUUID();
         collectionID cid = new collectionID(collName, tags, uuid);
         Object o = store.put(cid, new ConcurrentHashMap<String, Pair<UUID, Object>>());
         if(o != null)
@@ -104,7 +104,7 @@ public class KVServices {
     //Service to add new key-value pair to existing collection
     public int setRecord(String key, Object value){
         if(!isExistingKey(key)){
-            UUID uuid= UUID.randomUUID();
+            final UUID uuid= UUID.randomUUID();
             List<Object> values= new ArrayList<>();
             values.add(value);
             record.put(key, new Pair<>(uuid, values));

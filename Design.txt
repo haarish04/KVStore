@@ -82,3 +82,10 @@ For each update operation, if the key exists, update the value associated with t
 
 While implementing the methods for get,set operations on individual records, I need to pass the collection name as well in the arguments.
 The problem is, I cannot use regex with switch case, so if a query looks like: col.get {args}, I will have to split the string at . and extract LHS as collection name and the following letters as the operation, followed by the args
+
+<---------------------------------------------------------------------------------->
+Features to consider after I am done with the basic implementation of the DB (first version)
+
+-> Check status of DB
+-> Delete collections 
+-> DeleteAll records in a collection

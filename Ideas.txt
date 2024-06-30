@@ -1,0 +1,7 @@
+Shower ideas, sound easy but complicated asf to implement
+Might never implement
+
+-> Handle initializing multiple threads based on number of connections to the PORT to allow concurrent users
+-> Read, write lock for concurrency
+-> Atomic updates of data
+-> Write tests to check synchronous reads/writes

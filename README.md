@@ -1,4 +1,4 @@
-# Build Your Own Key-Value Store
+# KVStore is a custom key-value store written in java
 
 This application is my attempt at building a custom Key-Value store hosted locally using Java sockets
 

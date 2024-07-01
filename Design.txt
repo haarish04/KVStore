@@ -89,3 +89,4 @@ Features to consider after I am done with the basic implementation of the DB (fi
 -> Check status of DB
 -> Delete collections 
 -> DeleteAll records in a collection
+-> Figure out file storage

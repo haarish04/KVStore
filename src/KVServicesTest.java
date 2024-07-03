@@ -7,6 +7,8 @@ public class KVServicesTest {
 
         //Write test to create collection
 
+        //Write test to add tags to existing collection
+
         // Test adding a key-value pair
         KVServices.setRecord("abc", 100);
         System.out.println(KVServices.getRecord("abc")); // Expected output: 100

@@ -9,6 +9,11 @@ public class KVServicesTest {
 
         //Write test to add tags to existing collection
 
+        //Write test to rename collection
+
+        //Write test to delete tags from collection
+
+
         // Test adding a key-value pair
         KVServices.setRecord("abc", 100);
         System.out.println(KVServices.getRecord("abc")); // Expected output: 100
@@ -35,10 +40,13 @@ public class KVServicesTest {
             System.out.println("Invalid delete");
         }
 
+        //Write test to delete a value from list of values associated with a key
+        
+
         // Attempt to retrieve a deleted key
         System.out.println(KVServices.getRecord("abc")); // Expected output: null
 
-        // Test adding and deleting a non-existent key
+        // Test deleting a non-existent key
         if (!KVServices.deleteKey("nonExistentKey")) {
             System.out.println("Invalid delete");
         }

@@ -9,6 +9,10 @@ public class KVServicesTest {
         System.out.println(KVServices.createCollection("testColl", "firstCollection"));
 
         //Write test to add tags to existing collection
+        if(KVServices.addCollectionTag("testColl", "addTags"))
+            System.out.println("Tags added successfully");
+        else
+            System.out.println("Invalid add Tag");
 
         //Write test to rename collection
 

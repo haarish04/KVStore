@@ -15,6 +15,10 @@ public class KVServicesTest {
             System.out.println("Invalid add Tag");
 
         //Write test to rename collection
+        if(KVServices.renameCollection("testColl", "newTestColl"))
+            System.out.println("Rename collection successfull");
+        else
+            System.out.println("Unsuccessfull collection Rename");
 
         //Write test to delete tags from collection
 

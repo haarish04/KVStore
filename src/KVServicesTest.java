@@ -6,6 +6,7 @@ public class KVServicesTest {
         KVServices KVServices = new KVServices();
 
         //Write test to create collection
+        System.out.println(KVServices.createCollection("testColl", "firstCollection"));
 
         //Write test to add tags to existing collection
 

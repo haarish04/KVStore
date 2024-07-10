@@ -83,7 +83,7 @@ public class KVServices {
             if(cid.name.equals(collName)){
                 ConcurrentHashMap<String, Pair<UUID, Object>> collectionToUpdate = store.get(cid);
                 store.remove(cid);
-                String updatedTags = cid.tags + "," + tags;
+                String updatedTags = cid.tags + ", " + tags;
                 cid.tags= updatedTags;
                 store.put(cid, collectionToUpdate);
                 flag=true;// Denotes operation is completed

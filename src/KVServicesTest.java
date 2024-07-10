@@ -5,15 +5,20 @@ public class KVServicesTest {
     public static void main(String[] args) {
         KVServices KVServices = new KVServices();
 
-        //Write test to create collection
+        //Test to create collection
         System.out.println(KVServices.createCollection("testColl", "firstCollection"));
 
-        //Write test to get collection by name
+        //Test to get collection by name
         System.out.println(KVServices.getCollection("testColl"));
 
-        //Write test to add tags to existing collection
-        if(KVServices.addCollectionTag("testColl", "addTags"))
+        //Test to print tags of a collection
+        System.out.println(KVServices.getCollectionTag("testColl"));
+
+        //Test to add tags to existing collection
+        if(KVServices.addCollectionTag("testColl", "addTags")){
             System.out.println("Tags added successfully");
+            System.out.println(KVServices.getCollectionTag("testColl"));
+        }
         else
             System.out.println("Invalid add Tag");
 
@@ -24,8 +29,10 @@ public class KVServicesTest {
             System.out.println("Unsuccessfull collection Renamed");
 
         //Write test to delete tags from collection
-        if(KVServices.deleteCollectionTag("newTestColl"))
+        if(KVServices.deleteCollectionTag("newTestColl")){
             System.out.println("Tags deleted successfully");
+            System.out.println(KVServices.getCollectionTag("newTestColl"));
+        }
         else
             System.out.println("Invalid delete tags");
 

@@ -64,6 +64,17 @@ public class KVServices {
         
     }
 
+    //Service to get the tags of a collection
+    public String getCollectionTag(String collName){
+        String collTags="";
+        for(collectionID cid: store.keySet()){
+            if(cid.name.equals(collName)){
+                collTags=cid.tags;
+            }
+        }
+        return collTags;
+    }
+
 
     //Service to add new tags to existing collection
     public boolean addCollectionTag(String collName, String tags){

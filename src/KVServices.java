@@ -24,7 +24,7 @@ public class KVServices {
     public boolean isExistingCollection(String collName){
         boolean flag= false;
         for(collectionID cid : store.keySet()){
-            if(cid.name == collName)
+            if(cid.name.equals(collName))
                 flag=true;
         }
         return flag;
@@ -44,18 +44,18 @@ public class KVServices {
         }
         final UUID uuid = UUID.randomUUID();
         collectionID cid = new collectionID(collName, tags, uuid);
-        Object o = store.put(cid, new ConcurrentHashMap<String, Pair<UUID, Object>>());
-        if(o != null)
-            return "Create collection successfull";
-        
-        else
-            return "Invalid create collection";
+        store.put(cid, new ConcurrentHashMap<String, Pair<UUID, Object>>());
+        ConcurrentHashMap<String, Pair<UUID, Object>> retrievedCollection = store.get(cid);
+    
+        // Custom message to indicate success or failure based on the presence of the collection
+        return retrievedCollection != null ? "Collection created successfully (currently empty)" : "Failed to create collection";
+
     }
 
     //Service to get the entire collection
     public Object getCollection(String collName){
         for(collectionID cid: store.keySet()){
-            if(cid.name == collName){
+            if(cid.name.equals(collName)){
                 ConcurrentHashMap<String, Pair<UUID, Object>> getCollection = store.get(cid);
                 return getCollection;
             }

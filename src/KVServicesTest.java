@@ -9,6 +9,7 @@ public class KVServicesTest {
         System.out.println(KVServices.createCollection("testColl", "firstCollection"));
 
         //Write test to get collection by name
+        System.out.println(KVServices.getCollection("testColl"));
 
         //Write test to add tags to existing collection
         if(KVServices.addCollectionTag("testColl", "addTags"))

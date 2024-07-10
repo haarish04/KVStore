@@ -43,6 +43,18 @@ public class KVClientHandler implements Runnable {
                             }
                             break;
                         
+                        //Get collection using name
+                        case "GET":
+                            if(req.length >= 2){
+                                String name = req[1];
+                                Object getCollObject= KVServices.getCollection(name);
+                                if(getCollObject == null){
+                                    out.println("Collection not found");
+                                }
+                                else
+                                    out.println(getCollObject.toString());
+                            }
+                        
                         //Append new tags to the collection
                         case "ADDTAG":
                             if(req.length>=2){

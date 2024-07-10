@@ -52,6 +52,18 @@ public class KVServices {
             return "Invalid create collection";
     }
 
+    //Service to get the entire collection
+    public Object getCollection(String collName){
+        for(collectionID cid: store.keySet()){
+            if(cid.name == collName){
+                ConcurrentHashMap<String, Pair<UUID, Object>> getCollection = store.get(cid);
+                return getCollection;
+            }
+        }
+        return null;
+        
+    }
+
 
     //Service to add new tags to existing collection
     public boolean addCollectionTag(String collName, String tags){

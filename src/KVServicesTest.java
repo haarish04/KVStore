@@ -16,7 +16,7 @@ public class KVServicesTest {
 
         //Test to add tags to existing collection
         if(KVServices.addCollectionTag("testColl", "addTags")){
-            System.out.println("Tags added successfully");
+            System.out.println("Tags added successfully: ");
             System.out.println(KVServices.getCollectionTag("testColl"));
         }
         else
@@ -26,7 +26,7 @@ public class KVServicesTest {
         if(KVServices.renameCollection("testColl", "newTestColl"))
             System.out.println("Rename collection successfull");
         else
-            System.out.println("Unsuccessfull collection Renamed");
+            System.out.println("Unsuccessfull collection Rename");
 
         //Write test to delete tags from collection
         if(KVServices.deleteCollectionTag("newTestColl")){

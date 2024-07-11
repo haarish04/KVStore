@@ -149,7 +149,11 @@ public class KVServices {
 
     //Get all the records
     public String getAllRecords(){
-        return record.toString();
+        StringBuilder allRecords= new StringBuilder();
+        for(Object individualRecord: record.entrySet()){
+            allRecords.append(individualRecord.toString());
+        }
+        return allRecords.toString();
     }
 
     //Delete existing key value pair

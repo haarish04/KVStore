@@ -150,8 +150,11 @@ public class KVServices {
     //Get all the records
     public String getAllRecords(){
         StringBuilder allRecords= new StringBuilder();
-        for(Object individualRecord: record.entrySet()){
-            allRecords.append(individualRecord.toString());
+        for(Map.Entry<String, Pair<UUID, List<Object>>> entry : record.entrySet()){
+            String name= entry.getKey();
+            List<Object> values = entry.getValue().getValue();
+
+            allRecords.append("Name: ").append(name).append(", Values: ").append(values).append("\n");
         }
         return allRecords.toString();
     }

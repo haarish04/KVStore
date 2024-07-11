@@ -64,7 +64,15 @@ public class KVServicesTest {
         }
 
         //Write test to delete a value from list of values associated with a key
-        
+        KVServices.setRecord("xyz",10);
+        KVServices.setRecord("xyz",20);
+        System.out.println(KVServices.getRecord("xyz"));
+        if(KVServices.deleteValue("xyz",10))
+            System.out.println("Delete successfull");
+        else
+            System.out.println("Delete unsuccessfull");
+        System.out.println(KVServices.getRecord("xyz"));
+
 
         // Attempt to retrieve a deleted key
         System.out.println(KVServices.getRecord("abc")); // Expected output: null

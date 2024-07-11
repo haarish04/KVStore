@@ -142,9 +142,14 @@ public class KVServices {
 
 
     //Get specific records identified by key
-    public Object getRecord(String key){
+    public Object getRecord(String key) throws NullPointerException{
         Pair<UUID,List<Object>> value= record.get(key);
-        return value.getValue();
+        try{
+            return value.getValue();
+        }
+        catch(Exception e){
+            return "No record found";
+        }
     }
 
     //Get all the records

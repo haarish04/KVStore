@@ -67,7 +67,7 @@ If the key already exists, append the value to the list of values associated wit
 
 --GET--
 For each get operation, if the key exists, return the list of values associated with the key.
-For getAll, retur all records in the collection
+If no arugments present, getAll, return all records in the collection
 
 --DELETEKEY--
 For each delete operation, if the key exists, remove the key values pair from the collection

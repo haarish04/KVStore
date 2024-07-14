@@ -38,6 +38,9 @@ The following are the operations on collections
 --CREATE--
 Create a new collection with the name specified and any tags specified by the user
 
+--GET--
+Get the collection identified by the name
+
 --ADDTAG--
 Add tags to existing collection, this appends the tag to the existing tag (stored as a string)
 

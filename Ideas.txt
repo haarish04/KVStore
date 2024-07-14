@@ -6,3 +6,4 @@ Might never implement
 -> Atomic updates of data
 -> Write tests to check synchronous reads/writes
 -> Check the amount of time taken for individual requests
+-> Convert all the "object" variable types to specific types and check difference in time/space

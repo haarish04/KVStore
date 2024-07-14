@@ -5,3 +5,4 @@ Might never implement
 -> Read, write lock for concurrency
 -> Atomic updates of data
 -> Write tests to check synchronous reads/writes
+-> Check the amount of time taken for individual requests

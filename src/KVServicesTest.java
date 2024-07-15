@@ -38,47 +38,47 @@ public class KVServicesTest {
 
 
         // Test adding a key-value pair
-        KVServices.setRecord("abc", 100);
-        System.out.println(KVServices.getRecord("abc")); // Expected output: 100
+        KVServices.setRecord("newTestColl","abc", 100);
+        System.out.println(KVServices.getRecord("newTestColl","abc")); // Expected output: 100
 
         // Test retrieving the UUID for a given key
-        UUID uuidForAbc = KVServices.getUUIDforKey("abc");
+        UUID uuidForAbc = KVServices.getUUIDforKey("newTestColl","abc");
         System.out.println(uuidForAbc); // Expected output: UUID of the key "abc"
 
         // Test appending a key-value pair to existing list of values
-        KVServices.updateRecord("abc",100, 200);
-        System.out.println(KVServices.getRecord("abc")); // Expected output: 200
+        KVServices.updateRecord("newTestColl","abc",100, 200);
+        System.out.println(KVServices.getRecord("newTestColl","abc")); // Expected output: 200
 
         //Test adding value to existing key-value
-        KVServices.setRecord("abc",10);
-        System.out.println(KVServices.getRecord("abc")); // Expected output: {200,10}
+        KVServices.setRecord("newTestColl","abc",10);
+        System.out.println(KVServices.getRecord("newTestColl","abc")); // Expected output: {200,10}
 
         //Write test for getAll
-        System.out.println(KVServices.getAllRecords());
+        System.out.println(KVServices.getAllRecords("newTestColl"));
 
         // Test deleting a key-value pair
-        if (KVServices.deleteKey("abc")) {
+        if (KVServices.deleteKey("newTestColl","abc")) {
             System.out.println("Deleted");
         } else {
             System.out.println("Invalid delete");
         }
 
         //Write test to delete a value from list of values associated with a key
-        KVServices.setRecord("xyz",10);
-        KVServices.setRecord("xyz",20);
-        System.out.println(KVServices.getRecord("xyz"));
-        if(KVServices.deleteValue("xyz",10))
+        KVServices.setRecord("newTestColl","xyz",10);
+        KVServices.setRecord("newTestColl","xyz",20);
+        System.out.println(KVServices.getRecord("newTestColl","xyz"));
+        if(KVServices.deleteValue("newTestColl","xyz",10))
             System.out.println("Delete successfull");
         else
             System.out.println("Delete unsuccessfull");
-        System.out.println(KVServices.getRecord("xyz"));
+        System.out.println(KVServices.getRecord("newTestColl","xyz"));
 
 
         // Attempt to retrieve a deleted key
-        System.out.println(KVServices.getRecord("abc")); // Expected output: null
+        System.out.println(KVServices.getRecord("newTestColl","abc")); // Expected output: null
 
         // Test deleting a non-existent key
-        if (!KVServices.deleteKey("nonExistentKey")) {
+        if (!KVServices.deleteKey("newTestColl","nonExistentKey")) {
             System.out.println("Invalid delete");
         }
 

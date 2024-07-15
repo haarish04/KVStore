@@ -2,8 +2,8 @@ Shower ideas, sound easy but complicated asf to implement
 Might never implement
 
 -> Handle initializing multiple threads based on number of connections to the PORT to allow concurrent users
+-> Check the amount of time taken for individual requests
+-> Convert all the "object" variable types to specific types and check difference in time/space
 -> Read, write lock for concurrency
 -> Atomic updates of data
 -> Write tests to check synchronous reads/writes
--> Check the amount of time taken for individual requests
--> Convert all the "object" variable types to specific types and check difference in time/space

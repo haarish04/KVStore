@@ -126,21 +126,25 @@ public class KVServices {
 
     //Service to add new key-value pair to existing collection
     public int setRecord(String collName, String key, Object value){
-        ConcurrentHashMap<String, Pair<UUID, List<Object>>> Collection;
+        ConcurrentHashMap<String, Pair<UUID, List<Object>>> Collection = null;
         for(collectionID cid: store.keySet()){
             if(cid.name.equals(collName))
                 Collection = store.get(cid);
+            else
+                return -1;
             }
         if(!isExistingKey(key)){
             final UUID uuid= UUID.randomUUID();
             List<Object> values= new ArrayList<>();
             values.add(value);
+            Collection.put(key, new Pair<>(uuid, values));
             record.put(key, new Pair<>(uuid, values));
             return 0;
         }
         Pair<UUID, List<Object>>recordPair= record.get(key);
         List<Object>values =recordPair.getValue();
         values.add(value);
+        Collection.put(key, recordPair);
         record.put(key, recordPair);
         return 1;
     }

@@ -84,7 +84,11 @@ For each update operation, if the key exists, update the value associated with t
 <---------------------------------------------------------------------------------->
 
 While implementing the methods for get,set operations on individual records, I need to pass the collection name as well in the arguments.
-The problem is, I cannot use regex with switch case, so if a query looks like: col.get {args}, I will have to split the string at . and extract LHS as collection name and the following letters as the operation, followed by the args
+The problem is, I cannot use regex with switch case on the clientHandler, so if a query looks like: col.get {args}, I will have to split the string at . and extract LHS as collection name and the following letters as the operation, followed by the args.
+
+While storing records in the collection, need to be careful with the initializing of data structures inside the methods.
+For the first version, I will be using the Object data type instead of having strict type checking which I will have to change later on.
+
 
 <---------------------------------------------------------------------------------->
 Features to consider after I am done with the basic implementation of the DB (first version)

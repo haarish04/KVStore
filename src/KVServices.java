@@ -18,7 +18,7 @@ public class KVServices {
     }
 
     private static final Map<String, Pair<UUID, List<Object>>> record = new ConcurrentHashMap<>();
-    private static final Map<collectionID, ConcurrentHashMap<String, Pair<UUID, Object>>> store = new ConcurrentHashMap<>();
+    private static final Map<collectionID, ConcurrentHashMap<String, Pair<UUID, List<Object>>>> store = new ConcurrentHashMap<>();
 
     //Helper method to prevent duplicate collections
     public boolean isExistingCollection(String collName){
@@ -44,8 +44,8 @@ public class KVServices {
         }
         final UUID uuid = UUID.randomUUID();
         collectionID cid = new collectionID(collName, tags, uuid);
-        store.put(cid, new ConcurrentHashMap<String, Pair<UUID, Object>>());
-        ConcurrentHashMap<String, Pair<UUID, Object>> retrievedCollection = store.get(cid);
+        store.put(cid, new ConcurrentHashMap<String, Pair<UUID, List<Object>>>());
+        ConcurrentHashMap<String, Pair<UUID, List<Object>>> retrievedCollection = store.get(cid);
     
         // Custom message to indicate success or failure based on the presence of the collection
         return retrievedCollection != null ? "Collection created successfully (currently empty)" : "Failed to create collection";
@@ -56,7 +56,7 @@ public class KVServices {
     public Object getCollection(String collName){
         for(collectionID cid: store.keySet()){
             if(cid.name.equals(collName)){
-                ConcurrentHashMap<String, Pair<UUID, Object>> getCollection = store.get(cid);
+                ConcurrentHashMap<String, Pair<UUID, List<Object>>> getCollection = store.get(cid);
                 return getCollection;
             }
         }
@@ -81,7 +81,7 @@ public class KVServices {
         boolean flag=false;
         for(collectionID cid : store.keySet()){
             if(cid.name.equals(collName)){
-                ConcurrentHashMap<String, Pair<UUID, Object>> collectionToUpdate = store.get(cid);
+                ConcurrentHashMap<String, Pair<UUID, List<Object>>> collectionToUpdate = store.get(cid);
                 store.remove(cid);
                 String updatedTags = cid.tags + ", " + tags;
                 cid.tags= updatedTags;
@@ -98,7 +98,7 @@ public class KVServices {
         boolean flag=false;
         for(collectionID cid : store.keySet()){
             if(cid.name.equals(collName)){
-                ConcurrentHashMap<String, Pair<UUID, Object>> collectionToUpdate = store.get(cid);
+                ConcurrentHashMap<String, Pair<UUID, List<Object>>> collectionToUpdate = store.get(cid);
                 store.remove(cid);
                 cid.tags = "";
                 store.put(cid, collectionToUpdate);
@@ -113,7 +113,7 @@ public class KVServices {
         boolean flag = false;
         for (collectionID cid: store.keySet()){
             if(cid.name.equals(oldCollName)){
-                ConcurrentHashMap<String, Pair<UUID, Object>> collectionToUpdate = store.get(cid);
+                ConcurrentHashMap<String, Pair<UUID, List<Object>>> collectionToUpdate = store.get(cid);
                 store.remove(cid);
                 cid.name = newCollName;
                 store.put(cid, collectionToUpdate);
@@ -125,7 +125,12 @@ public class KVServices {
 
 
     //Service to add new key-value pair to existing collection
-    public int setRecord(String key, Object value){
+    public int setRecord(String collName, String key, Object value){
+        ConcurrentHashMap<String, Pair<UUID, List<Object>>> Collection;
+        for(collectionID cid: store.keySet()){
+            if(cid.name.equals(collName))
+                Collection = store.get(cid);
+            }
         if(!isExistingKey(key)){
             final UUID uuid= UUID.randomUUID();
             List<Object> values= new ArrayList<>();
@@ -142,7 +147,12 @@ public class KVServices {
 
 
     //Get specific records identified by key
-    public Object getRecord(String key) throws NullPointerException{
+    public Object getRecord(String collName, String key) throws NullPointerException{
+        ConcurrentHashMap<String, Pair<UUID, List<Object>>> Collection;
+        for(collectionID cid: store.keySet()){
+            if(cid.name.equals(collName))
+                Collection = store.get(cid);
+            }
         Pair<UUID,List<Object>> value= record.get(key);
         try{
             return value.getValue();
@@ -153,7 +163,12 @@ public class KVServices {
     }
 
     //Get all the records
-    public String getAllRecords(){
+    public String getAllRecords(String collName){
+        ConcurrentHashMap<String, Pair<UUID, List<Object>>> Collection;
+        for(collectionID cid: store.keySet()){
+            if(cid.name.equals(collName))
+                Collection = store.get(cid);
+            }
         StringBuilder allRecords= new StringBuilder();
         for(Map.Entry<String, Pair<UUID, List<Object>>> entry : record.entrySet()){
             String name= entry.getKey();
@@ -165,7 +180,12 @@ public class KVServices {
     }
 
     //Delete existing key value pair
-    public boolean deleteKey(String key){
+    public boolean deleteKey(String collName, String key){
+        ConcurrentHashMap<String, Pair<UUID, List<Object>>> Collection;
+        for(collectionID cid: store.keySet()){
+            if(cid.name.equals(collName))
+                Collection = store.get(cid);
+            }
         Object value= record.remove(key);
         if(value!= null)
             return true;
@@ -174,7 +194,12 @@ public class KVServices {
     }
 
     //Delete value from list of values associated with the key
-    public boolean deleteValue(String key, Object value){
+    public boolean deleteValue(String collName, String key, Object value){
+        ConcurrentHashMap<String, Pair<UUID, List<Object>>> Collection;
+        for(collectionID cid: store.keySet()){
+            if(cid.name.equals(collName))
+                Collection = store.get(cid);
+            }
         Pair<UUID, List<Object>> deleteFromValues= record.get(key);
         List<Object> valueList= deleteFromValues.getValue();
         if(valueList.remove(value))
@@ -184,7 +209,12 @@ public class KVServices {
     }
 
     //Update existing key-value
-    public boolean updateRecord(String key,Object oldValue, Object newValue){
+    public boolean updateRecord(String collName, String key,Object oldValue, Object newValue){
+        ConcurrentHashMap<String, Pair<UUID, List<Object>>> Collection;
+        for(collectionID cid: store.keySet()){
+            if(cid.name.equals(collName))
+                Collection = store.get(cid);
+            }
         Pair<UUID, List<Object>> updateExistingValue= record.get(key);
         List <Object> valueList = updateExistingValue.getValue();
         for (Object val : valueList){
@@ -196,7 +226,12 @@ public class KVServices {
     }
     
     //Get UUID of record
-    public UUID getUUIDforKey(String key){
+    public UUID getUUIDforKey(String collName, String key){
+        ConcurrentHashMap<String, Pair<UUID, List<Object>>> Collection;
+        for(collectionID cid: store.keySet()){
+            if(cid.name.equals(collName))
+                Collection = store.get(cid);
+            }
         Pair<UUID,List<Object>> value= record.get(key);
         return value.getKey();
     }

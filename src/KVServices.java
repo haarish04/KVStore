@@ -152,12 +152,13 @@ public class KVServices {
 
     //Get specific records identified by key
     public Object getRecord(String collName, String key) throws NullPointerException{
-        ConcurrentHashMap<String, Pair<UUID, List<Object>>> Collection;
+        ConcurrentHashMap<String, Pair<UUID, List<Object>>> Collection = null;
         for(collectionID cid: store.keySet()){
             if(cid.name.equals(collName))
                 Collection = store.get(cid);
             }
-        Pair<UUID,List<Object>> value= record.get(key);
+        Pair<UUID,List<Object>> value= Collection.get(key);
+        //Pair<UUID,List<Object>> value= record.get(key);
         try{
             return value.getValue();
         }
@@ -168,13 +169,13 @@ public class KVServices {
 
     //Get all the records
     public String getAllRecords(String collName){
-        ConcurrentHashMap<String, Pair<UUID, List<Object>>> Collection;
+        ConcurrentHashMap<String, Pair<UUID, List<Object>>> Collection = null;
         for(collectionID cid: store.keySet()){
             if(cid.name.equals(collName))
                 Collection = store.get(cid);
             }
         StringBuilder allRecords= new StringBuilder();
-        for(Map.Entry<String, Pair<UUID, List<Object>>> entry : record.entrySet()){
+        for(Map.Entry<String, Pair<UUID, List<Object>>> entry : Collection.entrySet()){
             String name= entry.getKey();
             List<Object> values = entry.getValue().getValue();
 
@@ -185,12 +186,12 @@ public class KVServices {
 
     //Delete existing key value pair
     public boolean deleteKey(String collName, String key){
-        ConcurrentHashMap<String, Pair<UUID, List<Object>>> Collection;
+        ConcurrentHashMap<String, Pair<UUID, List<Object>>> Collection = null;
         for(collectionID cid: store.keySet()){
             if(cid.name.equals(collName))
                 Collection = store.get(cid);
             }
-        Object value= record.remove(key);
+        Object value= Collection.remove(key);
         if(value!= null)
             return true;
         else
@@ -199,12 +200,12 @@ public class KVServices {
 
     //Delete value from list of values associated with the key
     public boolean deleteValue(String collName, String key, Object value){
-        ConcurrentHashMap<String, Pair<UUID, List<Object>>> Collection;
+        ConcurrentHashMap<String, Pair<UUID, List<Object>>> Collection = null;
         for(collectionID cid: store.keySet()){
             if(cid.name.equals(collName))
                 Collection = store.get(cid);
             }
-        Pair<UUID, List<Object>> deleteFromValues= record.get(key);
+        Pair<UUID, List<Object>> deleteFromValues= Collection.get(key);
         List<Object> valueList= deleteFromValues.getValue();
         if(valueList.remove(value))
             return true;
@@ -214,12 +215,12 @@ public class KVServices {
 
     //Update existing key-value
     public boolean updateRecord(String collName, String key,Object oldValue, Object newValue){
-        ConcurrentHashMap<String, Pair<UUID, List<Object>>> Collection;
+        ConcurrentHashMap<String, Pair<UUID, List<Object>>> Collection = null;
         for(collectionID cid: store.keySet()){
             if(cid.name.equals(collName))
                 Collection = store.get(cid);
             }
-        Pair<UUID, List<Object>> updateExistingValue= record.get(key);
+        Pair<UUID, List<Object>> updateExistingValue= Collection.get(key);
         List <Object> valueList = updateExistingValue.getValue();
         for (Object val : valueList){
             if(val.equals(oldValue))

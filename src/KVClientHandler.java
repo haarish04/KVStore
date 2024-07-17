@@ -20,6 +20,8 @@ public class KVClientHandler implements Runnable {
             //Write the output 
             PrintWriter out = new PrintWriter(clienSocket.getOutputStream(), true);
 
+            String collName= "testCollection";
+
             //Read the input and store as string
             String requestLine = in.readLine();
             while(requestLine!= null && connectionStatus){
@@ -102,7 +104,7 @@ public class KVClientHandler implements Runnable {
                             if(req.length == 3){
                                 String setKey= req[1];
                                 Object setValue= req[2];
-                                if(KVServices.setRecord(setKey,setValue)==0)
+                                if(KVServices.setRecord(collName,setKey,setValue)==0)
                                     out.println("New Record created");
                                 else
                                     out.println("Key already exists, added to list of values ");
@@ -116,11 +118,11 @@ public class KVClientHandler implements Runnable {
                         //Retrieve data
                         case "GET":
                             if(req.length == 1){
-                                KVServices.getAllRecords();
+                                KVServices.getAllRecords(collName);
                             }
                             else{
                                 String getKey= req[1];
-                                Object getValue= KVServices.getRecord(getKey);
+                                Object getValue= KVServices.getRecord(collName,getKey);
                                 if(getValue!= null){
                                     out.println("Value: "+ getValue.toString());
                                 }
@@ -133,7 +135,7 @@ public class KVClientHandler implements Runnable {
                         //Delete entire key value record
                         case "DELETEKEY":
                             String deleteKey= req[1];
-                            if(KVServices.deleteKey(deleteKey))
+                            if(KVServices.deleteKey(collName,deleteKey))
                                 out.println("Record Deleted");
                             
                             else
@@ -145,7 +147,7 @@ public class KVClientHandler implements Runnable {
                         case "DELETEVALUE":
                             String deletekey= req[1];
                             String deleteValue= req[2];
-                            if(KVServices.deleteValue(deletekey,deleteValue))
+                            if(KVServices.deleteValue(collName,deletekey,deleteValue))
                                 out.println("Value Deleted");
                             else
                                 out.println("Delete error !! Value not found");
@@ -158,7 +160,7 @@ public class KVClientHandler implements Runnable {
                             String updateKey= req[1];
                             Object oldValue= req[2];
                             Object newValue= req[3];
-                            if(KVServices.updateRecord(updateKey,oldValue, newValue)){
+                            if(KVServices.updateRecord(collName,updateKey,oldValue, newValue)){
                                 out.println("Update Success");
                             }
                             else{

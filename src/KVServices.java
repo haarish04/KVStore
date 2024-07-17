@@ -215,16 +215,19 @@ public class KVServices {
 
     //Update existing key-value
     public boolean updateRecord(String collName, String key,Object oldValue, Object newValue){
-        ConcurrentHashMap<String, Pair<UUID, List<Object>>> Collection = null;
+        ConcurrentHashMap<String, Pair<UUID, List<Object>>> Collection= null;
         for(collectionID cid: store.keySet()){
             if(cid.name.equals(collName))
                 Collection = store.get(cid);
             }
         Pair<UUID, List<Object>> updateExistingValue= Collection.get(key);
+        UUID UUIDforRecord= updateExistingValue.getKey();
         List <Object> valueList = updateExistingValue.getValue();
         for (Object val : valueList){
             if(val.equals(oldValue))
             valueList.set(valueList.indexOf(oldValue), newValue);// Find index of oldValue and replace with newValue
+            Pair<UUID, List<Object>> updatedRecord= new Pair<UUID,List<Object>>(UUIDforRecord, valueList);
+            Collection.put(key, updatedRecord);
             return true;
         }
         return false;
@@ -232,12 +235,12 @@ public class KVServices {
     
     //Get UUID of record
     public UUID getUUIDforKey(String collName, String key){
-        ConcurrentHashMap<String, Pair<UUID, List<Object>>> Collection;
+        ConcurrentHashMap<String, Pair<UUID, List<Object>>> Collection = null;
         for(collectionID cid: store.keySet()){
             if(cid.name.equals(collName))
                 Collection = store.get(cid);
             }
-        Pair<UUID,List<Object>> value= record.get(key);
+        Pair<UUID,List<Object>> value= Collection.get(key);
         return value.getKey();
     }
 
@@ -249,5 +252,4 @@ public class KVServices {
         }
         return null;
     }
-
 }

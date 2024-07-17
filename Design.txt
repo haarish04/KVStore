@@ -89,6 +89,7 @@ The problem is, I cannot use regex with switch case on the clientHandler, so if 
 While storing records in the collection, need to be careful with the initializing of data structures inside the methods.
 For the first version, I will be using the Object data type instead of having strict type checking which I will have to change later on.
 
+While updating records, there is no put method or modify methods for Pair class. When I update a record, I need to create a new Pair for the record and store in the collection.
 
 <---------------------------------------------------------------------------------->
 Features to consider after I am done with the basic implementation of the DB (first version)

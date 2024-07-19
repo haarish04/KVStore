@@ -103,6 +103,8 @@ While updating records, there is no put method or modify methods for Pair class.
 Features to consider after I am done with the basic implementation of the DB (first version)
 
 -> Check status of DB
+-> Modify the collection data structure such that the key is just the collName and the value can include the UUID and the tags.
+   This will improve the time complexity and reduce the traversals for retrieval.
 -> Delete collections 
 -> DeleteAll records in a collection
 -> Update tags in collection

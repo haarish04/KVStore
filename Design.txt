@@ -61,6 +61,10 @@ Instead of a global hashmap storing all the collections, I wanted to create a cl
 But I cannot do this as every time the create collection is invoked, the map created will be limited to the scope of the method and will not be available globally.
 So I decided to use a static hashmap in the KVStore class to store all the collections. This acts as a central repo of all the collections. Later on I will look into ways to serialize and deserialize data and try to store externally.
 
+For all the collection methods, I will have to take the CollName as input and then traverse through the store to match the name and retrieve the collectionID.
+This adds the traversal time complexity to each operation since my key is of the type CollectionID and not just collName.
+Maybe in future this can be changed to make the key simpler but the value can store the UUID and tags just like I did for the records.
+
 <---------------------------------------------------------------------------------->
 The following are the operations on individual records
 

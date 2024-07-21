@@ -96,13 +96,14 @@ public class KVClientHandler implements Runnable {
                             }
                             break;
                         
+                        //Retrieve the UUID of the collection    
                         case "UUID":
                             if(req.length ==2){
                                 String collName = req[1];
                                 UUID collUUID= KVServices.getUUIDforCollection(collName);
-                                if(collUUID!= null){
+                                if(collUUID!= null)
                                     out.println(collUUID);
-                                }
+                                
                                 else
                                     out.println("Collection does not exist");
                             }
@@ -125,16 +126,16 @@ public class KVClientHandler implements Runnable {
                                     out.println("Key already exists, added to list of values ");
 
                             }
-                            else{
+                            else
                                 out.println("Invalid SET operation");
-                            }
+                            
                             break;
 
                         //Retrieve data
                         case "GET":
-                            if(req.length == 1){
+                            if(req.length == 1)
                                 KVServices.getAllRecords(testCollName);
-                            }
+                            
                             else{
                                 String getKey= req[1];
                                 Object getValue= KVServices.getRecord(testCollName,getKey);
@@ -183,6 +184,10 @@ public class KVClientHandler implements Runnable {
                             }
                             break;
                         
+                        //Retrieve UUID of individual Record
+                        case "UUID":
+                        
+                        
                         //Terminate connection
                         case "BYE":
                             out.println("Closing connection......");
@@ -195,9 +200,9 @@ public class KVClientHandler implements Runnable {
                     }
                     
                 }
-                else{
+                else
                     out.println("Invalid Request");
-                }
+                
             }
         } catch (Exception e){
             e.printStackTrace();

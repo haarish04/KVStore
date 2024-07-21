@@ -1,5 +1,6 @@
 import java.io.*;
 import java.net.Socket;
+import java.util.*;
 
 public class KVClientHandler implements Runnable {
     private Socket clienSocket;
@@ -20,7 +21,7 @@ public class KVClientHandler implements Runnable {
             //Write the output 
             PrintWriter out = new PrintWriter(clienSocket.getOutputStream(), true);
 
-            String collName= "testCollection";
+            String testCollName= "testCollection";
 
             //Read the input and store as string
             String requestLine = in.readLine();
@@ -94,6 +95,20 @@ public class KVClientHandler implements Runnable {
                                 out.println("Invalid Rename");
                             }
                             break;
+                        
+                        case "UUID":
+                            if(req.length ==2){
+                                String collName = req[1];
+                                UUID collUUID= KVServices.getUUIDforCollection(collName);
+                                if(collUUID!= null){
+                                    out.println(collUUID);
+                                }
+                                else
+                                    out.println("Collection does not exist");
+                            }
+                            else{
+                                out.println("Invalid request");
+                            }
                     }
 
                     //The query sent starts with the command followed by other details about key and value
@@ -104,7 +119,7 @@ public class KVClientHandler implements Runnable {
                             if(req.length == 3){
                                 String setKey= req[1];
                                 Object setValue= req[2];
-                                if(KVServices.setRecord(collName,setKey,setValue)==0)
+                                if(KVServices.setRecord(testCollName,setKey,setValue)==0)
                                     out.println("New Record created");
                                 else
                                     out.println("Key already exists, added to list of values ");
@@ -118,11 +133,11 @@ public class KVClientHandler implements Runnable {
                         //Retrieve data
                         case "GET":
                             if(req.length == 1){
-                                KVServices.getAllRecords(collName);
+                                KVServices.getAllRecords(testCollName);
                             }
                             else{
                                 String getKey= req[1];
-                                Object getValue= KVServices.getRecord(collName,getKey);
+                                Object getValue= KVServices.getRecord(testCollName,getKey);
                                 if(getValue!= null){
                                     out.println("Value: "+ getValue.toString());
                                 }
@@ -135,7 +150,7 @@ public class KVClientHandler implements Runnable {
                         //Delete entire key value record
                         case "DELETEKEY":
                             String deleteKey= req[1];
-                            if(KVServices.deleteKey(collName,deleteKey))
+                            if(KVServices.deleteKey(testCollName,deleteKey))
                                 out.println("Record Deleted");
                             
                             else
@@ -147,7 +162,7 @@ public class KVClientHandler implements Runnable {
                         case "DELETEVALUE":
                             String deletekey= req[1];
                             String deleteValue= req[2];
-                            if(KVServices.deleteValue(collName,deletekey,deleteValue))
+                            if(KVServices.deleteValue(testCollName,deletekey,deleteValue))
                                 out.println("Value Deleted");
                             else
                                 out.println("Delete error !! Value not found");
@@ -160,7 +175,7 @@ public class KVClientHandler implements Runnable {
                             String updateKey= req[1];
                             Object oldValue= req[2];
                             Object newValue= req[3];
-                            if(KVServices.updateRecord(collName,updateKey,oldValue, newValue)){
+                            if(KVServices.updateRecord(testCollName,updateKey,oldValue, newValue)){
                                 out.println("Update Success");
                             }
                             else{

@@ -82,7 +82,8 @@ public class KVServicesTest {
             System.out.println("Invalid delete");
         }
 
-        //Write test for closing connection
+        //Write test for obtaining UUID of collection
+        System.out.println(KVServices.getUUIDforCollection("newTestColl"));
 
     }
 }

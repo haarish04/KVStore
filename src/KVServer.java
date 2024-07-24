@@ -7,6 +7,7 @@ public class KVServer{
     private KVServices KVServices = new KVServices();
     private ServerSocket serverSocket;
 
+    //Method to initialize new threads and expose server to the port via the clientHandler
     public void start() throws IOException{
         serverSocket= new ServerSocket(port);
         System.out.println("Server started on port "+ port);
@@ -17,6 +18,7 @@ public class KVServer{
         }
     }
 
+    //Method to handle shutting down of thread(s)
     public void shutdown() throws IOException{
         if(serverSocket != null){
             serverSocket.close();

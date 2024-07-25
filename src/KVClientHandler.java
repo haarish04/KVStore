@@ -41,9 +41,9 @@ public class KVClientHandler implements Runnable {
                                     tags.append(req[i]).append(" ");
                                 out.println(KVServices.createCollection(name, tags.toString()));   
                             }
-                            else{
+                            else
                                 out.println("Invalid request");
-                            }
+                            
                             break;
                         
                         //Get collection using name
@@ -68,9 +68,9 @@ public class KVClientHandler implements Runnable {
                                     tags.append(req[i]).append(" ");
                                 KVServices.addCollectionTag(name, tags.toString());
                             }
-                            else{
+                            else
                                 out.println("Invalid Add Tag");
-                            }
+                            
                             break;
                         
                         //Delete all the tags associate with the collection 
@@ -79,9 +79,9 @@ public class KVClientHandler implements Runnable {
                                 String name= req[1];
                                 KVServices.deleteCollectionTag(name);
                             }
-                            else{
+                            else
                                 out.println("Invalid Delete Tag");
-                            }
+                            
                             break;
                         
                         //Rename collection name
@@ -91,9 +91,9 @@ public class KVClientHandler implements Runnable {
                                 String newCollName= req[2];
                                 KVServices.renameCollection(oldCollName, newCollName);
                             }
-                            else{
+                            else
                                 out.println("Invalid Rename");
-                            }
+                            
                             break;
                         
                         //Retrieve the UUID of the collection    
@@ -107,9 +107,9 @@ public class KVClientHandler implements Runnable {
                                 else
                                     out.println("Collection does not exist");
                             }
-                            else{
+                            else
                                 out.println("Invalid request");
-                            }
+                            
                     }
 
                     //The query sent starts with the command followed by other details about key and value
@@ -176,12 +176,12 @@ public class KVClientHandler implements Runnable {
                             String updateKey= req[1];
                             Object oldValue= req[2];
                             Object newValue= req[3];
-                            if(KVServices.updateRecord(testCollName,updateKey,oldValue, newValue)){
+                            if(KVServices.updateRecord(testCollName,updateKey,oldValue, newValue))
                                 out.println("Update Success");
-                            }
-                            else{
+                            
+                            else
                                 out.println("Error in update");
-                            }
+                            
                             break;
                         
                         //Retrieve UUID of individual Record
